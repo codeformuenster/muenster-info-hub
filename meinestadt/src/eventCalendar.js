@@ -49,7 +49,7 @@ const extractMetaInfo = (html) => {
 				n[c.name] = c.value;
 				return n;
 			}, {});
-		const address = `${addressFormFields.street}:-:-:${addressFormFields.city}`;
+		const address = `${addressFormFields.street}|${addressFormFields.city}`;
 		return {
 			category,
 			title,

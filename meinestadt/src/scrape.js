@@ -4,7 +4,7 @@ const { Client } = require('@elastic/elasticsearch');
 const eventCalendar = require('./eventCalendar');
 
 const elasticUrl = process.env.ELASTICSEARCH_URL;
-const index = 'MuensterHub';
+const index = process.env.ELASTICSEARCH_INDEX;
 const client = new Client({ node: elasticUrl });
 
 const buildEventUrl = (from, until) => {
