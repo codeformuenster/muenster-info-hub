@@ -63,10 +63,8 @@ const extractMetaInfo = (html) => {
 const extract = (html) => {
 	const json = extractJSONLD(html);
 	const metaInfo = extractMetaInfo(html);
-
 	return json.map((item) => {
 		const match = metaInfo.find((meta) => item.title === meta.title);
-		console.log(match);
 		return { ...item, ...match };
 	});
 };
