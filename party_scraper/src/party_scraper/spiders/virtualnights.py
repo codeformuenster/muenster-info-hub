@@ -1,9 +1,9 @@
 import datetime
 import json
 
-from pprint import pprint
-
 import scrapy
+
+from party_scraper import items
 
 DATE_TODAY = str(datetime.date.today())
 
@@ -25,7 +25,7 @@ class VirtualNightsSpider(scrapy.Spider):
     def _parse_article(self, article_selector):
         for span in article_selector.xpath('descendant::span/text()').getall():
             if span == 'Münster':
-                event = {}
+                event = items.PartyItem()
 
                 event['start_date'] = article_selector.xpath(
                     'header/a/time/@datetime').get()
@@ -55,7 +55,7 @@ class VirtualNightsSpider(scrapy.Spider):
                 geo_lat = article_selector.xpath(
                     'p[@itemprop="location"]/span[@itemtype="http://schema.org/GeoCoordinates"]/meta[@itemprop="latitude"]/@content').get()
 
-                event['location'] = {'lat': geo_lat, 'lon': geo_lon}
+                event['geo'] = {'lat': geo_lat, 'lon': geo_lon}
                 event['tags'] = ['party']
 
                 img = (article_selector.xpath('div/span/img/@src').get()
@@ -67,16 +67,9 @@ class VirtualNightsSpider(scrapy.Spider):
                 return event
 
     def parse(self, response):
-        # page = response.url.split("/")[-2]
         articles = response.selector.xpath('//article')
-        events = []
 
         for a in articles:
             for span in a.xpath('descendant::span/text()').getall():
                 if span == 'Münster':
-                    events.append(self._parse_article(a))
-
-        filename = '{}.json'.format(self.name)
-        with open(filename, 'w') as f:
-            json.dump(events, f)
-        self.log('Saved file %s' % filename)
+                    yield self._parse_article(a)

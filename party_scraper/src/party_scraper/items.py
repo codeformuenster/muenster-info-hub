@@ -8,7 +8,16 @@
 import scrapy
 
 
-class PartyScraperItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class PartyItem(scrapy.Item):
+    title = scrapy.Field()
+    subtitle = scrapy.Field()
+    start_date = scrapy.Field()
+    end_date = scrapy.Field()
+    description = scrapy.Field()
+    link = scrapy.Field()
+    category = scrapy.Field()
+    location_name = scrapy.Field()
+    location_address = scrapy.Field()
+    tags = scrapy.Field()
+    geo = scrapy.Field()
+    images = scrapy.Field()
