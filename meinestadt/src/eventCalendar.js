@@ -1,6 +1,7 @@
 const cheerio = require('cheerio');
 
 const createEvent = (cEvent) => ({
+	id: `${cEvent.name}-${cEvent.start_date}`,
 	title: cEvent.name,
 	description: cEvent.description,
 	start_date: cEvent.startDate,
