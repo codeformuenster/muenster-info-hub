@@ -28,7 +28,8 @@ class TopEventsSpider(scrapy.Spider):
     name = "TopEventsSpider"
     allowed_domains = ["www.muenster.de"]
     start_urls = [
-        "https://www.muenster.de/veranstaltungskalender/scripts/frontend/top-veranstaltungen.php"
+        "https://www.muenster.de/veranstaltungskalender/scripts/frontend/top-veranstaltungen.php",
+        "https://www.muenster.de/veranstaltungskalender/scripts/frontend/mm2/top-veranstaltungen.php?guestID=101"
     ]
     if "ELASTICSEARCH_URL_PREFIX" in os.environ:
         elasticsearch_url_param = os.environ["ELASTICSEARCH_URL_PREFIX"]
@@ -48,11 +49,8 @@ class TopEventsSpider(scrapy.Spider):
         )
 
         detail_links = response.xpath("//a[text() = 'Details']/@href").extract()
-        self.log("-----> nr of detail links found: " + str(len(detail_links)))
 
         for href in detail_links:
-            self.log("-----> Processing detail link ")
-            
             category = "top"
             yield response.follow(
                 href, callback=self.extract_event, meta={"category": category}
@@ -158,15 +156,13 @@ class TopEventsSpider(scrapy.Spider):
         # we'll ignore the leading day of the week
 
         self.log("----> datetime " + raw_datetime)
+        raw_datetime = raw_datetime.replace("--","-")
         datetime_parts = raw_datetime.split(",")  # split at commas
 
         if len(datetime_parts) > 1:
             date = datetime_parts[1]
         else:
             date = raw_datetime
-
-
-        self.log("----> we got date " + date)
 
         date = date.strip(" \t\n\r")  # drop whitespaces and such
         start_time = ""
@@ -280,6 +276,7 @@ class TopEventsSpider(scrapy.Spider):
                 "lat": event["location_lat"], 
                 "lon": event["location_lng"],
             },
+            "is_top_event": True,
             "images": [
                 { "image_url":event["image_url"] }
             ]
