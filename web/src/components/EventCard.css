@@ -11,9 +11,9 @@
 
 .info {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-template-rows: 1fr;
-  grid-template-areas: "image stats";
+  grid-template-areas: "stats";
   grid-area: info;
 }
 
@@ -37,12 +37,6 @@
   grid-area: tags;
 }
 
-.image {
-  grid-area: image;
-  display: flex;
-  justify-content: center;
-}
-
 .event-image {
-  width: 100px;
+  width: calc(50vw - 35px);
 }
