@@ -3,6 +3,7 @@ const cheerio = require('cheerio');
 const createEvent = (cEvent) => ({
 	id: `${cEvent.name}-${cEvent.start_date}`,
 	title: cEvent.name,
+	is_top_event: true,
 	description: cEvent.description,
 	start_date: cEvent.startDate,
 	end_date: cEvent.endDate,
@@ -54,7 +55,7 @@ const extractMetaInfo = (html) => {
 		return {
 			category,
 			title,
-			tickets,
+			pre_booking: tickets,
 			location_address: address,
 		};
 	});
