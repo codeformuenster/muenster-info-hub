@@ -1,7 +1,12 @@
 import React from "react";
+import * as moment from 'moment';
+import 'moment/locale/de';
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import RoomIcon from '@material-ui/icons/Room';
 import ClockIcon from "@material-ui/icons/WatchLater";
+import LabelIcon from '@material-ui/icons/Label';
+
 
 import "./EventCard.css";
 
@@ -31,7 +36,8 @@ function EventCard({ title, time, place, tags, image, description, lat, lon }) {
       className={classes.root}
       elevation={3}
       style={{
-        background: `linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ), url(${image})`
+        background: `linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ), url(${image})`,
+        backgroundSize: 'cover'
       }}
     >
       <div className="grid-container">
@@ -39,7 +45,7 @@ function EventCard({ title, time, place, tags, image, description, lat, lon }) {
           <Typography
             variant="h6"
             component="h2"
-            gutterBottom={2}
+            gutterBottom
             className={classes.title}
           >
             {title.length > 50 ? <>{title.substring(0, 50)}&hellip;</> : title}
@@ -48,13 +54,14 @@ function EventCard({ title, time, place, tags, image, description, lat, lon }) {
         <div className="info">
           <div className="stats">
             <div className="time">
-              <ClockIcon /> {time}
+              <ClockIcon /> {moment(time).fromNow()}
             </div>
-            <div className="place">{place}</div>
+            <div className="place">
+              <RoomIcon /> {place}</div>
             <div className="tags">
               {tags.map(tag => (
                 <span key={tag} className={classes.tag}>
-                  {tag}
+                  <LabelIcon /> {tag}
                 </span>
               ))}
             </div>
