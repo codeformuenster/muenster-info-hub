@@ -11,7 +11,6 @@ const downloadHTMLToFile = async (url, filename) => {
 
 const saveAsJSON = (obj, fileName) => {
 	const jsonString = JSON.stringify(obj, 0, 2);
-	console.log(jsonString, fileName);
 	fs.writeFileSync(buildPath(fileName), jsonString);
 };
 

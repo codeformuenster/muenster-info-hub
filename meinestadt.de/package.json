@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node scrapers/pager.js",
+    "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@elastic/elasticsearch": "^7.3.0",
     "cheerio": "^1.0.0-rc.3",
     "moment": "^2.24.0",
     "request": "^2.88.0",
