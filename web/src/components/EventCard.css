@@ -1,13 +1,12 @@
 .grid-container {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 20px 1fr;
+  grid-template-rows: auto 1fr;
   grid-template-areas: "title" "info";
 }
 
 .title {
   grid-area: title;
-  font-size: 14px;
 }
 
 .info {
@@ -24,15 +23,26 @@
   grid-template-rows: 1fr 1fr 1fr;
   grid-template-areas: "time" "place" "tags";
   grid-area: stats;
-  font-size: 12px;
 }
 
-.time { grid-area: time; }
+.time {
+  grid-area: time;
+}
 
-.place { grid-area: place; }
+.place {
+  grid-area: place;
+}
 
-.tags { grid-area: tags; }
+.tags {
+  grid-area: tags;
+}
 
-.image { grid-area: image; }
+.image {
+  grid-area: image;
+  display: flex;
+  justify-content: center;
+}
 
-.event-image { width: 100px }
+.event-image {
+  width: 100px;
+}
