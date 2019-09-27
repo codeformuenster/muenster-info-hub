@@ -1,0 +1,38 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 20px 1fr;
+  grid-template-areas: "title" "info";
+}
+
+.title {
+  grid-area: title;
+  font-size: 14px;
+}
+
+.info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "image stats";
+  grid-area: info;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas: "time" "place" "tags";
+  grid-area: stats;
+  font-size: 12px;
+}
+
+.time { grid-area: time; }
+
+.place { grid-area: place; }
+
+.tags { grid-area: tags; }
+
+.image { grid-area: image; }
+
+.event-image { width: 100px }
