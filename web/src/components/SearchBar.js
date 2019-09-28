@@ -4,6 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
+import DataContext from '../DataContext';
 
 const useStyles = makeStyles(theme => ({
   search: {
@@ -45,6 +46,8 @@ const useStyles = makeStyles(theme => ({
 
 const SearchBar = () => {
   const classes = useStyles();
+  const { setSearchPhrase } = React.useContext(DataContext);
+
   return (
     <AppBar position="static">
     <Toolbar>
@@ -59,6 +62,7 @@ const SearchBar = () => {
             input: classes.inputInput,
           }}
           inputProps={{ 'aria-label': 'Suche' }}
+          onChange={(e) => setSearchPhrase(e.target.value)}
         />
       </div>
     </Toolbar>
