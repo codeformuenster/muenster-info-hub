@@ -38,7 +38,7 @@ curl --request DELETE "http://$elasticsearch_ip:9200/msinfohub-*"
         "category", // (optional)
         "location_name", 
         "location_address",  // (optional)
-        "source": "$quell-webseite"
+        "source", // origin of these data
         "tags": [ // (optional)
             "bla", ...
         ],
@@ -46,7 +46,7 @@ curl --request DELETE "http://$elasticsearch_ip:9200/msinfohub-*"
             "lat": "51.956944",
             "lon": "7.005556"
          },
-        "imges":[
+        "images":[
           {
           "image_url",  // (optional)
           "image_text", // (optional)
