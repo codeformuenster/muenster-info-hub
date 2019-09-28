@@ -7,8 +7,9 @@ const createEvent = (cEvent) => ({
 	is_top_event: true,
 	source: 'meinestadt.de',
 	description: cEvent.description,
-	start_date: moment(cEvent.startDate).format(moment.ISO_8601),
-	end_date: moment(cEvent.endDate).format(moment.ISO_8601),
+	// FIXME https://momentjs.com/timezone/
+	start_date: moment.utc(cEvent.startDate, "ddd MMM D HH:mm:ss ZZ YYYY").toISOString(),
+	end_date: moment.utc(cEvent.endDate, "ddd MMM D HH:mm:ss ZZ YYYY").toISOString(),
 	link: cEvent.url,
 	location_name: cEvent.location.name,
 	location_plz: cEvent.location.address.postalCode,
