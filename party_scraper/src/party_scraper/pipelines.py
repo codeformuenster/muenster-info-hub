@@ -7,6 +7,7 @@
 
 import json
 import os.path
+
 import os
 
 from elasticsearch import Elasticsearch
@@ -22,6 +23,7 @@ elasticsearch_url, index_prefix = os.environ['ELASTICSEARCH_URL_PREFIX'].rsplit(
 
 class JsonWithEncodingPipeline(object):
     def _post_elastic(self, content):
+
         Elasticsearch(elasticsearch_url).index(
             index=(f"{index_prefix}events"),
             doc_type="_doc",
