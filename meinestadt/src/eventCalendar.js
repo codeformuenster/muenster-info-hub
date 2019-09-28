@@ -4,6 +4,7 @@ const createEvent = (cEvent) => ({
 	id: `${cEvent.name}-${cEvent.start_date}`,
 	title: cEvent.name,
 	is_top_event: true,
+	source: 'meinestadt.de',
 	description: cEvent.description,
 	start_date: cEvent.startDate,
 	end_date: cEvent.endDate,
