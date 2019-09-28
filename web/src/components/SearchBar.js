@@ -4,7 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles(theme => ({
   searchBar: {
     // margin: theme.spacing(0),
-    width: '100%',
+    padding: theme.spacing(1),
+    width: `calc(100% - ${theme.spacing(4)}px)`,
     fontSize: theme.typography.h5.fontSize
   },
   wrapper: {
@@ -18,7 +19,7 @@ const SearchBar = () => {
   const classes = useStyles();
   return (
     <div className={classes.wrapper}>
-      <input type="text" className={classes.searchBar} />
+      <input type="text" className={classes.searchBar} placeholder="Suche" />
     </div>
   );
 };
