@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import * as R from "ramda";
+import { useDebounce } from "use-debounce";
 
 const DataContext = React.createContext({
   setSearchPhrase: () => {},
@@ -23,29 +24,30 @@ function onlyShowEventsWithImages(events) {
 
 function sanitizeCategories(events) {
   return events.map(event => {
-    if (event.category === 'top') {
-      event.category = 'TOP-Event'
+    if (event.category === "top") {
+      event.category = "TOP-Event";
       return event;
     } else {
       return event;
     }
-  })
+  });
 }
 
 function sanatizeSources(events) {
   return events.map(event => {
-    if (event.source === 'www.muenster.de') {
-      event.source = 'muenster.de'
+    if (event.source === "www.muenster.de") {
+      event.source = "muenster.de";
       return event;
     } else {
       return event;
     }
-  })
+  });
 }
 
 const DataProvider = ({ children }) => {
   const [searchPhrase, setSearchPhrase] = React.useState("");
   const [events, setEvents] = React.useState([]);
+  const [searchPhraseDebounced] = useDebounce(searchPhrase, 200);
 
   React.useEffect(() => {
     const fetchEvent = async () => {
@@ -58,12 +60,10 @@ const DataProvider = ({ children }) => {
         searchPhrase.trim() !== ""
           ? {
               query: {
-                bool: {
-                  must: [
-                    { match: { title: searchPhrase.trim() } }
-                    // { match: { content: "Elasticsearch" } }
-                  ]
+                wildcard: {
+                  title: `*${searchPhraseDebounced.trim().toLowerCase()}*`
                 }
+                // { match: { content: "Elasticsearch" } }
               }
             }
           : undefined
@@ -109,7 +109,7 @@ const DataProvider = ({ children }) => {
       setEvents(polishedEvents);
     };
     fetchEvent();
-  }, [searchPhrase]);
+  }, [searchPhraseDebounced]);
 
   return (
     <DataContext.Provider value={{ setSearchPhrase, events }}>
