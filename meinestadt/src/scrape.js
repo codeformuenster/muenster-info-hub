@@ -3,8 +3,12 @@ const request = require('request-promise');
 const { Client } = require('@elastic/elasticsearch');
 const eventCalendar = require('./eventCalendar');
 
-const elasticUrl = process.env.ELASTICSEARCH_URL;
-const index = process.env.ELASTICSEARCH_INDEX;
+const elasticUrl = process.env.ELASTICSEARCH_URL_PREFIX.split('/').slice(0,-1).join('/')
+const index = process.env.ELASTICSEARCH_URL_PREFIX.split('/').slice(-1) + 'events'
+
+console.log(`elasticUrl: ${elasticUrl}`);
+console.log(`index ${index}`);
+
 const client = new Client({ node: elasticUrl });
 
 const buildEventUrl = (from, until) => {
@@ -26,7 +30,9 @@ const scrape = async () => {
 	const result = await scrapeEventCalendar(html);
 	// eslint-disable-next-line no-console
 	console.log(`found ${result.length} events`);
+
 	await Promise.all(result.map(persist));
+
 	// eslint-disable-next-line no-console
 	console.log(`done indexing ${result.length} items`);
 };

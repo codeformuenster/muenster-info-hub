@@ -1,0 +1,14 @@
+# version: '2.2'
+# services:
+#   meine-stadt:
+#     build: .
+#     environment:
+#       - ELASTICSEARCH_URL=http://elasticsearch:9200
+#       - ELASTICSEARCH_INDEX=msinfohub
+
+version: '2.2'
+services:
+  import-meinestadt:
+    build: .
+    environment:
+      - ELASTICSEARCH_URL_PREFIX
