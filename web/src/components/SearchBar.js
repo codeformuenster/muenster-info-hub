@@ -7,6 +7,9 @@ import SearchIcon from '@material-ui/icons/Search';
 import DataContext from '../DataContext';
 
 const useStyles = makeStyles(theme => ({
+  searchBar: {
+    backgroundColor: '#d70f64'
+  },
   search: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -49,7 +52,7 @@ const SearchBar = () => {
   const { setSearchPhrase } = React.useContext(DataContext);
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" className={classes.searchBar}>
     <Toolbar>
       <div className={classes.search}>
         <div className={classes.searchIcon}>
