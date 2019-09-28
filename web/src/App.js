@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
 
 function sortByDate(events) {
  return events.sort(function(a,b){
-    return b.time - a.time;
+    return a.time - b.time;
   });
 }
 
