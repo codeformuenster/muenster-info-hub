@@ -16,6 +16,7 @@ const Events = () => {
           link={event.link}
           time={event.time}
           place={event.place}
+          address={event.address}
           tags={[event.category]}
           image={event.image}
           description={event.description}

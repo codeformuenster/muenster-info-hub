@@ -6,13 +6,16 @@ import { Link } from '@material-ui/core';
 import RoomIcon from "@material-ui/icons/Room";
 import ClockIcon from "@material-ui/icons/WatchLater";
 import LabelIcon from "@material-ui/icons/Label";
+import DirectionsIcon from '@material-ui/icons/Directions';
+import InfoIcon from '@material-ui/icons/Info';
+
 
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
+
 
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -83,13 +86,32 @@ const useStyles = makeStyles(theme => ({
   },
   labelIcon: {
     color: 'rgba(0, 0, 0, 0.54)'
-  }
+  },
+  infoIcon: {
+    color: '#4666FF'
+  },
+  directionsIcon: {
+    marginLeft: theme.spacing(1),
+  },
+  directionsButton: {
+    width: '100%'
+  },
 }));
 
-function EventCard({ title, link, time, place, tags, image, description, lat, lon }) {
-  const classes = useStyles();
+function getMapsLink(place, address, lat, lon) {
+  if (lat && lon) {
+    return `http://maps.google.com/?ll=${lat},${lon}`
+  } else if (place && address) {
+   return `http://maps.google.com/?q=${place}+${address}`
+  } else if (address) {
+   return `http://maps.google.com/?q=${address}`
+  } else {
+   return `http://maps.google.com/?q=${place}`
+  }
+}
 
-  const [isExpanded, setExpanded] = React.useState(false);
+function EventCard({ source, title, link, time, place, address, tags, image, description, lat, lon }) {
+  const classes = useStyles();
 
   return (
     <Card className={classes.card} raised={true}>
@@ -125,6 +147,12 @@ function EventCard({ title, link, time, place, tags, image, description, lat, lo
                   </ListItemIcon>
                   <ListItemText primary={tags.join(", ")} />
                 </ListItem>
+                <ListItem dense={true} className={classes.listItem}>
+                  <ListItemIcon className={classes.eventStats}>
+                    <InfoIcon className={classes.infoIcon}/>
+                  </ListItemIcon>
+                  <ListItemText primary={source} />
+                </ListItem>
               </List>
             </Typography>
           </CardContent>
@@ -142,6 +170,11 @@ function EventCard({ title, link, time, place, tags, image, description, lat, lo
             {description}
           </Typography>
         </ExpansionPanelDetails>
+        <Button href={getMapsLink(place, address, lat, lon)} target="_blank" rel="noopener" variant="contained" color="secondary" className={classes.directionsButton}>
+            Bring mich hin!
+            <DirectionsIcon className={classes.directionsIcon} />
+        </Button>
+
       </ExpansionPanel>
     </Card>
   );
