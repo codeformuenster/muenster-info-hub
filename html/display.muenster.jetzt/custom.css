@@ -1,0 +1,117 @@
+@keyframes wobble {
+    0% {
+        transform: translateX(0%);
+    }
+
+    15% {
+        transform: translateX(-5%) rotate(-5deg);
+    }
+
+    30% {
+        transform: translateX(4%) rotate(3deg);
+    }
+
+    45% {
+        transform: translateX(-3%) rotate(-3deg);
+    }
+
+    60% {
+        transform: translateX(2%) rotate(2deg);
+    }
+
+    75% {
+        transform: translateX(-1%) rotate(-1deg);
+    }
+
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes tastetherainbow {
+    0% {color:hsl(0,100%,50%);}
+    10% {color:hsl(36,100%,40%);}
+    20% {color:hsl(72,100%,30%);}
+    30% {color:hsl(108,100%,30%);}
+    40% {color:hsl(144,100%,30%);}
+    50% {color:hsl(180,100%,35%);}
+    60% {color:hsl(216,100%,50%);}
+    70% {color:hsl(252,100%,50%);}
+    80% {color:hsl(288,100%,50%);}
+    90% {color:hsl(324,100%,50%);}
+    100% {color:hsl(360,100%,50%);}
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    animation: wobble 3s infinite !important;
+}
+
+.carousel-item img.d-block,
+.carousel-item .img {
+    height: 100vh;
+    width: 100vw;
+    background-size: cover;
+    background-position: center center;
+}
+
+.carousel-item h5 {
+    font-size: 40pt;
+    text-shadow: 0 0 8px black;
+    font-family: 'Staatliches', sans-serif;
+}
+
+.carousel-item p {
+    font-size: 20pt;
+    text-shadow: 0 0 8px black;
+}
+
+.carousel-caption {
+    background: rgba(0, 0, 0, .8);
+    display: block !important;
+}
+
+header {
+    top: 1vw;
+    left: 1vw;
+    font-size: 9vw;
+    line-height: 10vw;
+    box-sizing: border-box;
+    font-family: 'Staatliches', sans-serif;
+    height: 12vw;
+    width: 85vw;
+    position: absolute;
+    z-index: 10;
+    background: #fff;
+    animation: tastetherainbow 10s infinite;
+    text-align: center;
+    padding: 1.5vw 1vw 0.5vw 1vw;
+}
+
+.qr {
+    width: 12vw;
+    height: 12vw;
+    top: 1vw;
+    right: 1vw;
+    position: absolute;
+}
+
+.carousel-control-next,
+.carousel-control-prev {
+    filter: brightness(100);
+    opacity: 1;
+}
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+    height: 5vw;
+    width: 5vw;
+}
+
+@media (orientation: portrait) {
+.carousel-caption {
+    left:0;
+    right:0;
+    bottom:0;
+}
+}
