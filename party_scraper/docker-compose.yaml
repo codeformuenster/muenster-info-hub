@@ -1,0 +1,12 @@
+version: '3.6'
+services:
+  party-scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: tail -f /dev/null
+    container_name: party-scraper
+    volumes:
+      - type: bind
+        source: ./src
+        target: /src
