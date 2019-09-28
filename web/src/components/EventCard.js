@@ -75,6 +75,15 @@ const useStyles = makeStyles(theme => ({
   listItem: {
     padding: 0
   },
+  clockIcon: {
+    color: '#d70f64'
+  },
+  roomIcon: {
+    color: '#00a396'
+  },
+  labelIcon: {
+    color: 'rgba(0, 0, 0, 0.54)'
+  }
 }));
 
 function EventCard({ title, link, time, place, tags, image, description, lat, lon }) {
@@ -100,19 +109,19 @@ function EventCard({ title, link, time, place, tags, image, description, lat, lo
               <List disablePadding={true}>
                 <ListItem dense={true} className={classes.listItem}>
                   <ListItemIcon className={classes.eventStats}>
-                    <ClockIcon />
+                    <ClockIcon className={classes.clockIcon}/>
                   </ListItemIcon>
                   <ListItemText primary={moment(time).fromNow()} />
                 </ListItem>
                 <ListItem dense={true} className={classes.listItem}>
                   <ListItemIcon className={classes.eventStats}>
-                    <RoomIcon />
+                    <RoomIcon className={classes.roomIcon}/>
                   </ListItemIcon>
                   <ListItemText primary={place} />
                 </ListItem>
                 <ListItem dense={true} className={classes.listItem}>
                   <ListItemIcon className={classes.eventStats}>
-                    <LabelIcon />
+                    <LabelIcon className={classes.labelIcon}/>
                   </ListItemIcon>
                   <ListItemText primary={tags.join(", ")} />
                 </ListItem>
