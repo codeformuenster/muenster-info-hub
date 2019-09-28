@@ -2,6 +2,7 @@ import React from "react";
 import * as moment from "moment";
 import "moment/locale/de";
 import Typography from "@material-ui/core/Typography";
+import { Link } from '@material-ui/core';
 import RoomIcon from "@material-ui/icons/Room";
 import ClockIcon from "@material-ui/icons/WatchLater";
 import LabelIcon from "@material-ui/icons/Label";
@@ -76,7 +77,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function EventCard({ title, time, place, tags, image, description, lat, lon }) {
+function EventCard({ title, link, time, place, tags, image, description, lat, lon }) {
   const classes = useStyles();
 
   const [isExpanded, setExpanded] = React.useState(false);
@@ -84,39 +85,41 @@ function EventCard({ title, time, place, tags, image, description, lat, lon }) {
   return (
     <Card className={classes.card} raised={true}>
       <CardActionArea>
-      <CardMedia className={classes.media} image={image} title={title} />
-      <CardContent className={classes.cardContent}>
-        <Typography
-          gutterBottom
-          variant="h5"
-          component="h2"
-          className={classes.title}
-        >
-          {title}
-        </Typography>
-        <Typography variant="body1" color="textSecondary" component="p">
-          <List disablePadding={true}>
-            <ListItem dense={true} className={classes.listItem}>
-              <ListItemIcon className={classes.eventStats}>
-                <ClockIcon />
-              </ListItemIcon>
-              <ListItemText primary={moment(time).fromNow()} />
-            </ListItem>
-            <ListItem dense={true} className={classes.listItem}>
-              <ListItemIcon className={classes.eventStats}>
-                <RoomIcon />
-              </ListItemIcon>
-              <ListItemText primary={place} />
-            </ListItem>
-            <ListItem dense={true} className={classes.listItem}>
-              <ListItemIcon className={classes.eventStats}>
-                <LabelIcon />
-              </ListItemIcon>
-              <ListItemText primary={tags.join(", ")} />
-            </ListItem>
-          </List>
-        </Typography>
-      </CardContent>
+        <Link href={link} target="_blank" rel="noopener">
+          <CardMedia className={classes.media} image={image} title={title} />
+          <CardContent className={classes.cardContent}>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="h2"
+              className={classes.title}
+            >
+              {title}
+            </Typography>
+            <Typography variant="body1" color="textSecondary" component="p">
+              <List disablePadding={true}>
+                <ListItem dense={true} className={classes.listItem}>
+                  <ListItemIcon className={classes.eventStats}>
+                    <ClockIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={moment(time).fromNow()} />
+                </ListItem>
+                <ListItem dense={true} className={classes.listItem}>
+                  <ListItemIcon className={classes.eventStats}>
+                    <RoomIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={place} />
+                </ListItem>
+                <ListItem dense={true} className={classes.listItem}>
+                  <ListItemIcon className={classes.eventStats}>
+                    <LabelIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={tags.join(", ")} />
+                </ListItem>
+              </List>
+            </Typography>
+          </CardContent>
+        </Link>
       </CardActionArea>
       <ExpansionPanel className={classes.eventDetails}>
         <ExpansionPanelSummary
