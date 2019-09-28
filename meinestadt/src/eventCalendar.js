@@ -1,4 +1,5 @@
 const cheerio = require('cheerio');
+const moment = require('moment');
 
 const createEvent = (cEvent) => ({
 	id: `${cEvent.name}-${cEvent.start_date}`,
@@ -6,8 +7,8 @@ const createEvent = (cEvent) => ({
 	is_top_event: true,
 	source: 'meinestadt.de',
 	description: cEvent.description,
-	start_date: cEvent.startDate,
-	end_date: cEvent.endDate,
+	start_date: moment(cEvent.startDate).format(moment.ISO_8601),
+	end_date: moment(cEvent.endDate).format(moment.ISO_8601),
 	link: cEvent.url,
 	location_name: cEvent.location.name,
 	location_plz: cEvent.location.address.postalCode,
