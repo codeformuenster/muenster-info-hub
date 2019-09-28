@@ -25,3 +25,33 @@ echo "xdg-open http://$kibana_ip:5601"
 curl --request DELETE "http://$elasticsearch_ip:9200/msinfohub-*"
 
 ```
+
+## Datenstruktur
+
+    {
+        "title", 
+        "subtitle", // (optional) 
+        "start_date": "2008-03-01T13:00:00Z", 
+        "end_date": "2008-03-01T15:00:00Z",  // (optional)
+        "description", // (optional)
+        "link", 
+        "category", // (optional)
+        "location_name", 
+        "location_address",  // (optional)
+        "source": "$quell-webseite"
+        "tags": [ // (optional)
+            "bla", ...
+        ],
+        "geo": {
+            "lat": "51.956944",
+            "lon": "7.005556"
+         },
+        "imges":[
+          {
+          "image_url",  // (optional)
+          "image_text", // (optional)
+          "image_copyright"    // (optional)
+          }
+        ],  // (optional)
+    }
+
