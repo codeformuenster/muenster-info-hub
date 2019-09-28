@@ -272,6 +272,7 @@ class TopEventsSpider(scrapy.Spider):
             "category": "top",
             "location_name": event["location"],
             "location_address": event["location_addresse"],
+            "source": "www.muenster.de",
             "geo": {
                 "lat": event["location_lat"], 
                 "lon": event["location_lng"],
