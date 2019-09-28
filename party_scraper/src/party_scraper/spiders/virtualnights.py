@@ -22,6 +22,13 @@ class VirtualNightsSpider(scrapy.Spider):
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
 
+    def _parse_details(self, response):
+        event = response.meta['event']
+        event['description'] = response.selector.xpath(
+            '//div[@class="event-description"]/text()').get()
+        return event
+
+
     def _parse_article(self, article_selector):
         for span in article_selector.xpath('descendant::span/text()').getall():
             if span == 'Münster':
@@ -57,6 +64,7 @@ class VirtualNightsSpider(scrapy.Spider):
 
                 event['geo'] = {'lat': geo_lat, 'lon': geo_lon}
                 event['tags'] = ['party']
+                event['source'] = 'virtualnights.com'
 
                 img = (article_selector.xpath('div/span/img/@src').get()
                     if article_selector.xpath('div/span/img/@src').get()
@@ -64,7 +72,11 @@ class VirtualNightsSpider(scrapy.Spider):
 
                 event['images'] = [{'image_url': img}]
 
-                return event
+                request = scrapy.Request(
+                    url=event['link'], callback=self._parse_details,
+                    meta={'event': event})
+
+                return request
 
     def parse(self, response):
         articles = response.selector.xpath('//article')
