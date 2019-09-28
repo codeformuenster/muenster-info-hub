@@ -8,6 +8,7 @@ import LabelIcon from "@material-ui/icons/Label";
 
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
+import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
@@ -48,6 +49,9 @@ const useStyles = makeStyles(theme => ({
     height: 0,
     transition: "height 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
   },
+  eventStats: {
+    minWidth: 35,
+  },
   eventDetails: {
     color: 'white',
     backgroundColor: '#6A6A6A',
@@ -68,6 +72,7 @@ function EventCard({ title, time, place, tags, image, description, lat, lon }) {
 
   return (
     <Card className={classes.card} raised={true}>
+      <CardActionArea>
       <CardMedia className={classes.media} image={image} title={title} />
       <CardContent className={classes.cardContent}>
         <Typography
@@ -81,19 +86,19 @@ function EventCard({ title, time, place, tags, image, description, lat, lon }) {
         <Typography variant="body1" color="textSecondary" component="p">
           <List disablePadding={true}>
             <ListItem dense={true} className={classes.listItem}>
-              <ListItemIcon>
+              <ListItemIcon className={classes.eventStats}>
                 <ClockIcon />
               </ListItemIcon>
               <ListItemText primary={moment(time).fromNow()} />
             </ListItem>
             <ListItem dense={true} className={classes.listItem}>
-              <ListItemIcon>
+              <ListItemIcon className={classes.eventStats}>
                 <RoomIcon />
               </ListItemIcon>
               <ListItemText primary={place} />
             </ListItem>
             <ListItem dense={true} className={classes.listItem}>
-              <ListItemIcon>
+              <ListItemIcon className={classes.eventStats}>
                 <LabelIcon />
               </ListItemIcon>
               <ListItemText primary={tags.join(", ")} />
@@ -101,6 +106,7 @@ function EventCard({ title, time, place, tags, image, description, lat, lon }) {
           </List>
         </Typography>
       </CardContent>
+      </CardActionArea>
       <ExpansionPanel className={classes.eventDetails}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
