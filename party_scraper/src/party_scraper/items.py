@@ -21,3 +21,4 @@ class PartyItem(scrapy.Item):
     tags = scrapy.Field()
     geo = scrapy.Field()
     images = scrapy.Field()
+    source = scrapy.Field()
