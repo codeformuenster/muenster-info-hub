@@ -5,9 +5,17 @@ import SearchBar from "./components/SearchBar";
 import axios from 'axios';
 import * as R from 'ramda';
 
+import logo from './logo.png';
+
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(3, 2)
+  },
+  logo: {
+      width: '86%',
+      maxWidth: '420px',
+      margin: theme.spacing(1),
+      marginBottom: 0,
   }
 }));
 
@@ -58,6 +66,7 @@ function App() {
 
   return (
     <div>
+      <img src={logo} alt="münster.jetzt logo" className={classes.logo} />
       <SearchBar />
         {events.map(event => (
           <EventCard
