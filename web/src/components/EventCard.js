@@ -55,7 +55,10 @@ const useStyles = makeStyles(theme => ({
   detailsExpanded: {
     height: "auto",
     transition: "height 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
-  }
+  },
+  listItem: {
+    padding: 0
+  },
 }));
 
 function EventCard({ title, time, place, tags, image, description, lat, lon }) {
@@ -77,19 +80,19 @@ function EventCard({ title, time, place, tags, image, description, lat, lon }) {
         </Typography>
         <Typography variant="body1" color="textSecondary" component="p">
           <List disablePadding={true}>
-            <ListItem dense={true}>
+            <ListItem dense={true} className={classes.listItem}>
               <ListItemIcon>
                 <ClockIcon />
               </ListItemIcon>
               <ListItemText primary={moment(time).fromNow()} />
             </ListItem>
-            <ListItem dense={true}>
+            <ListItem dense={true} className={classes.listItem}>
               <ListItemIcon>
                 <RoomIcon />
               </ListItemIcon>
               <ListItemText primary={place} />
             </ListItem>
-            <ListItem dense={true}>
+            <ListItem dense={true} className={classes.listItem}>
               <ListItemIcon>
                 <LabelIcon />
               </ListItemIcon>
