@@ -48,6 +48,10 @@ const useStyles = makeStyles(theme => ({
     height: 0,
     transition: "height 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
   },
+  eventDetails: {
+    color: 'white',
+    backgroundColor: '#6A6A6A',
+  },
   detailsExpanded: {
     height: "auto",
     transition: "height 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
@@ -94,7 +98,7 @@ function EventCard({ title, time, place, tags, image, description, lat, lon }) {
           </List>
         </Typography>
       </CardContent>
-      <ExpansionPanel>
+      <ExpansionPanel className={classes.eventDetails}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
