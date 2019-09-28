@@ -10,5 +10,6 @@ Import the stadt-münster-top-events:
 ```bash
 export ELASTICSEARCH_URL_PREFIX="https://data.mein-ms.de/"
 export MAPQUEST_KEY="supersecretkey"
+
 scrapy runspider TopEvents.py
 ```

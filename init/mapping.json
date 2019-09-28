@@ -1,0 +1,18 @@
+{
+  "date_start": {
+    "type": "date"
+  },
+  "date_end": {
+    "type": "date"
+  },
+  "address": {
+    "properties": {
+      "geo": {
+        "type": "geo_point"
+      },
+      "geometry": {
+        "type": "geo_shape"
+      }
+    }
+  }
+}
