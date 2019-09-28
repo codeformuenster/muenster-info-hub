@@ -7,10 +7,14 @@
 
 import json
 import os.path
+import os
 
 from elasticsearch import Elasticsearch
 
-ES_URL = "https://api.muenster.jetzt/"
+elasticsearch_url, index_prefix = os.environ['ELASTICSEARCH_URL_PREFIX'].rsplit("/", maxsplit=1)
+# es = elasticsearch.Elasticsearch(elasticsearch_url)
+
+# ES_URL = "https://api.muenster.jetzt/"
 #ES_URL = "https://data.mein-ms.de/"
 
 #FILE_NAME = 'scraped_data_utf8.json'
@@ -18,8 +22,8 @@ ES_URL = "https://api.muenster.jetzt/"
 
 class JsonWithEncodingPipeline(object):
     def _post_elastic(self, content):
-        Elasticsearch(ES_URL).index(
-            index=("infohub"),
+        Elasticsearch(elasticsearch_url).index(
+            index=(f"{index_prefix}events"),
             doc_type="_doc",
             body=content
         )

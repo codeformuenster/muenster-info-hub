@@ -1,0 +1,8 @@
+version: '2.2'
+services:
+  import:
+    build: .
+    environment:
+      - ELASTICSEARCH_URL_PREFIX
+    volumes:
+      - ./data:/usr/src/app/data

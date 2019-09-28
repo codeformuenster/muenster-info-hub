@@ -1,0 +1,4 @@
+elasticsearch==7.0.3
+certifi
+scrapy
+pytz

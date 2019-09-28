@@ -1,6 +1,8 @@
 version: '2.2'
 services:
-  app:
+  import-muenster-topevents:
     build: .
     environment:
       - ELASTICSEARCH_URL_PREFIX
+      - MAPQUEST_KEY
+

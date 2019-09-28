@@ -1,0 +1,20 @@
+{
+  "start_date": {
+    "type": "date",
+    "format": "strict_date_optional_time||epoch_millis||YYYY-MM-DD'T'HH:mm:ssZ"
+  },
+  "end_date": {
+    "type": "date",
+    "format": "strict_date_optional_time||epoch_millis||YYYY-MM-DD'T'HH:mm:ssZ"
+  },
+  "address": {
+    "properties": {
+      "geo": {
+        "type": "geo_point"
+      },
+      "geometry": {
+        "type": "geo_shape"
+      }
+    }
+  }
+}
