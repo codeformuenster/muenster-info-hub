@@ -17,6 +17,11 @@ function removePastEvents(events) {
   return R.filter(n => n.time >= new Date(), events);
 }
 
+function onlyShowEventsWithImages(events) {
+  const hasImage = R.has('image');
+  return R.filter(event => event.image !== null, events);
+}
+
 const DataProvider = ({ children }) => {
   const [searchPhrase, setSearchPhrase] = React.useState("");
   const [events, setEvents] = React.useState([]);
@@ -28,7 +33,7 @@ const DataProvider = ({ children }) => {
           hits: { hits }
         }
       } = await axios.post(
-        "https://api.muenster.jetzt/infohub/_search?size=20",
+        "https://api.muenster.jetzt/infohub/_search?size=2000",
         searchPhrase.trim() !== ""
           ? {
               query: {
@@ -72,7 +77,8 @@ const DataProvider = ({ children }) => {
 
       const polishedEvents = R.pipe(
         sortByDate,
-        removePastEvents
+        removePastEvents,
+        onlyShowEventsWithImages,
       )(events);
 
       setEvents(polishedEvents);
