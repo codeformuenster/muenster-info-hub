@@ -37,8 +37,6 @@ class EventURLSpider(scrapy.Spider):
         for event_url in event_urls:
             yield scrapy.Request(event_url, callback=self._parse_event)
 
-        return events
-
     def _get_location_address(self, url):
         response = scrapy.Request(url=url)
         add = response.xpath('//div[@class="entry-content"]/text()').getall()
