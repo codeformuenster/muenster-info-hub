@@ -27,7 +27,7 @@ const DataProvider = ({ children }) => {
         data: {
           hits: { hits }
         }
-      } = await axios.get(`/_search?size=20`);
+      } = await axios.get("https://api.muenster.jetzt/infohub/_search?size=20");
       const events = hits.map(
         ({
           _id: id,
@@ -62,7 +62,7 @@ const DataProvider = ({ children }) => {
       setEvents(polishedEvents);
     };
     fetchEvent();
-  }, []);
+  }, [searchPhrase]);
 
   return (
     <DataContext.Provider value={{ setSearchPhrase, events }}>
