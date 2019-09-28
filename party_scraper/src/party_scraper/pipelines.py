@@ -10,8 +10,10 @@ import os.path
 
 from elasticsearch import Elasticsearch
 
-ES_URL = "https://data.mein-ms.de/"
-FILE_NAME = 'scraped_data_utf8.json'
+ES_URL = "https://api.muenster.jetzt/"
+#ES_URL = "https://data.mein-ms.de/"
+
+#FILE_NAME = 'scraped_data_utf8.json'
 
 
 class JsonWithEncodingPipeline(object):
@@ -23,18 +25,20 @@ class JsonWithEncodingPipeline(object):
         )
 
     def process_item(self, item, spider):
-        if os.path.exists(FILE_NAME):
-            with open(FILE_NAME, 'r') as json_file:
-                previous = json.load(json_file)
+        # if os.path.exists(FILE_NAME):
+        #     with open(FILE_NAME, 'r') as json_file:
+        #         previous = json.load(json_file)
+        #
+        #     with open(FILE_NAME, 'w') as json_file:
+        #         previous.append(dict(item))
+        #         json_file.write(json.dumps(previous, ensure_ascii=False))
+        # else:
+        #     with open(FILE_NAME, 'w+') as json_file:
+        #         json_file.write(json.dumps([dict(item)], ensure_ascii=False))
+        if not item:
+            return
 
-            with open(FILE_NAME, 'w') as json_file:
-                previous.append(dict(item))
-                json_file.write(json.dumps(previous, ensure_ascii=False))
-        else:
-            with open(FILE_NAME, 'w+') as json_file:
-                json_file.write(json.dumps([dict(item)], ensure_ascii=False))
-
-        # self._post_elastic(dict(item))
+        self._post_elastic(dict(item))
         return item
 
     def spider_closed(self, spider):
