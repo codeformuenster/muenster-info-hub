@@ -55,3 +55,12 @@ curl --request DELETE "http://$elasticsearch_ip:9200/msinfohub-*"
         ],  // (optional)
     }
 
+## Elasticsearch/API debuggen: 
+
+* Mapping anzeigen: https://api.muenster.jetzt/infohub/_mapping
+* Show indexes: https://api.muenster.jetzt/infohub/_cat/indices
+* Show content of mein-ms-places index: https://api.muenster.jetzt/infohub/_search
+* Search for something: https://api.muenster.jetzt/infohub/_search?q=something
+* Search in a specific field: https://api.muenster.jetzt/infohub/_search?q=field:something
+  
+  
