@@ -54,8 +54,19 @@ const useStyles = makeStyles(theme => ({
     minWidth: 35,
   },
   eventDetails: {
-    color: 'white',
-    backgroundColor: '#6A6A6A',
+    color: theme.palette.grey[800],
+    backgroundColor: theme.palette.grey[300],
+    '& .MuiExpansionPanelSummary-content': {
+      display: 'none',
+    },
+    '& .MuiIconButton-edgeEnd': {
+      marginRight: 'unset'
+    },
+    '& .MuiExpansionPanelSummary-expandIcon': {
+      backgroundColor: theme.palette.grey[400],
+      padding: 6,
+      margin: 6
+    }
   },
   detailsExpanded: {
     height: "auto",
