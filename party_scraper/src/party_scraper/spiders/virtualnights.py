@@ -1,5 +1,6 @@
 import datetime
 import json
+import re
 
 import scrapy
 
@@ -24,8 +25,10 @@ class VirtualNightsSpider(scrapy.Spider):
 
     def _parse_details(self, response):
         event = response.meta['event']
-        event['description'] = response.selector.xpath(
+        description = response.selector.xpath(
             '//div[@class="event-description"]/text()').get()
+        description = description.strip()
+        event['description'] = re.sub(' +', ' ', description)
         return event
 
 
