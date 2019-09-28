@@ -18,8 +18,18 @@ function removePastEvents(events) {
 }
 
 function onlyShowEventsWithImages(events) {
-  const hasImage = R.has('image');
   return R.filter(event => event.image !== null, events);
+}
+
+function sanitizeCategories(events) {
+  return events.map(event => {
+    if (event.category === 'top') {
+      event.category = 'TOP-Event'
+      return event;
+    } else {
+      return event;
+    }
+  })
 }
 
 const DataProvider = ({ children }) => {
@@ -79,6 +89,7 @@ const DataProvider = ({ children }) => {
         sortByDate,
         removePastEvents,
         onlyShowEventsWithImages,
+        sanitizeCategories,
       )(events);
 
       setEvents(polishedEvents);
