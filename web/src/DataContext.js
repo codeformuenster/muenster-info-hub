@@ -53,6 +53,7 @@ const DataProvider = ({ children }) => {
             start_date,
             images,
             location_name,
+            location_address,
             description
           }
         }) => ({
@@ -63,6 +64,7 @@ const DataProvider = ({ children }) => {
           link,
           description,
           place: location_name,
+          address: location_address,
           kicker: subtitle,
           category
         })
