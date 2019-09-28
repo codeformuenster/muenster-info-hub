@@ -18,7 +18,6 @@ class PartyItem(scrapy.Item):
     category = scrapy.Field()
     location_name = scrapy.Field()
     location_address = scrapy.Field()
-    tags = scrapy.Field()
     geo = scrapy.Field()
     images = scrapy.Field()
     source = scrapy.Field()

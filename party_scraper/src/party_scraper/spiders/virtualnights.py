@@ -66,7 +66,7 @@ class VirtualNightsSpider(scrapy.Spider):
                     'p[@itemprop="location"]/span[@itemtype="http://schema.org/GeoCoordinates"]/meta[@itemprop="latitude"]/@content').get()
 
                 event['geo'] = {'lat': geo_lat, 'lon': geo_lon}
-                event['tags'] = ['party']
+                event['category'] = 'Party'
                 event['source'] = 'virtualnights.com'
 
                 img = (article_selector.xpath('div/span/img/@src').get()
