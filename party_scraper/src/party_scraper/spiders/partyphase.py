@@ -37,7 +37,7 @@ class EventURLSpider(scrapy.Spider):
         event['link'] = response.url
         event['description'] = u' '.join([s.strip() for s in response.xpath('//div/p/text()').getall()])
         # TODO: extract tags from description
-        # event['tags'] = ['party']
+        event['tags'] = ['party'] if any(tag in event['title'].lower() for tag in ['live','party','fest']) else []
         event['source'] = 'muenster.partyphase.net'
 
         location_url = response.xpath('//div/div[@class="ort"]/a/@href').get()
