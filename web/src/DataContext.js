@@ -27,7 +27,21 @@ const DataProvider = ({ children }) => {
         data: {
           hits: { hits }
         }
-      } = await axios.get("https://api.muenster.jetzt/infohub/_search?size=20");
+      } = await axios.post(
+        "https://api.muenster.jetzt/infohub/_search?size=20",
+        searchPhrase.trim() !== ""
+          ? {
+              query: {
+                bool: {
+                  must: [
+                    { match: { title: searchPhrase.trim() } }
+                    // { match: { content: "Elasticsearch" } }
+                  ]
+                }
+              }
+            }
+          : undefined
+      );
       const events = hits.map(
         ({
           _id: id,
