@@ -29,7 +29,7 @@ html {
 	color: white;
 }
 
-.card a{
+.card a, footer a{
 	color: #01608d;
 }
 
