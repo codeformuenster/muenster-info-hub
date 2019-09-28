@@ -8,7 +8,7 @@ node create_indexes.js
 Import the stadt-münster-top-events:
 
 ```bash
-export ELASTICSEARCH_URL_PREFIX="https://data.mein-ms.de/"
+export ELASTICSEARCH_URL_PREFIX="https://api.muenster.jetzt/"
 export MAPQUEST_KEY="supersecretkey"
 
 scrapy runspider TopEvents.py
