@@ -30,16 +30,16 @@ function App() {
   useEffect( () => {
     const fetchEvent = async() => {
       const result = await axios.get(`/_search?size=20`);
-      console.log('result', result)
       const events = result.data.hits.hits.map(({
         _id: id,
-        _source: { title, category, subtitle, start_date, images, location_name, description }
+        _source: { link, title, category, subtitle, start_date, images, location_name, description }
       }) => (
         {
           id,
           title: title,
           time: new Date(start_date),
           image: images ? images[0].image_url : null,
+          link,
           description,
           place: location_name,
           kicker: subtitle,
@@ -65,6 +65,7 @@ function App() {
             {...event}
             title={event.title}
             kicker={event.kicker}
+            link={event.link}
             time={event.time}
             place={event.place}
             tags={[event.category]}
