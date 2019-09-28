@@ -32,6 +32,17 @@ function sanitizeCategories(events) {
   })
 }
 
+function sanatizeSources(events) {
+  return events.map(event => {
+    if (event.source === 'www.muenster.de') {
+      event.source = 'muenster.de'
+      return event;
+    } else {
+      return event;
+    }
+  })
+}
+
 const DataProvider = ({ children }) => {
   const [searchPhrase, setSearchPhrase] = React.useState("");
   const [events, setEvents] = React.useState([]);
@@ -92,6 +103,7 @@ const DataProvider = ({ children }) => {
         removePastEvents,
         onlyShowEventsWithImages,
         sanitizeCategories,
+        sanatizeSources
       )(events);
 
       setEvents(polishedEvents);
