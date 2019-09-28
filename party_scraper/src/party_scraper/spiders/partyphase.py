@@ -1,6 +1,22 @@
 import scrapy
 from party_scraper import items
+from datetime import datetime
 
+
+MONTH = {
+    'Januar': 'January',
+    'Februar': 'February',
+    'März': 'March',
+    'April': 'April',
+    'Mai': 'May',
+    'Juni': 'June',
+    'Juli': 'July',
+    'August': 'August',
+    'September': 'September',
+    'Oktober': 'October',
+    'November': 'November',
+    'Dezember': 'December'
+}
 
 class EventURLSpider(scrapy.Spider):
     name = "partyphase"
@@ -32,7 +48,13 @@ class EventURLSpider(scrapy.Spider):
         event = items.PartyItem()
 
         event['title'] = response.xpath('//div/div[@class="eme_period"]/text()').get()
-        event['start_date'] = response.xpath('//div/div[@class="beginn"]/text()').get()
+
+        wday, date, time = response.xpath('//div/div[@class="beginn"]/text()').get().split(' | ')
+        mday, month, year = date.split(' ')
+        start_date = f'{mday} {MONTH[month]} {year} {time}'
+        start_date = datetime.strptime(start_date, '%d. %B %Y %H:%M Uhr').isoformat()
+        event['start_date'] = f'{start_date}+02:00'
+
         event['location_name'] = response.xpath('//div/div[@class="ort"]/a/text()').get()
         event['link'] = response.url
         event['description'] = u' '.join([s.strip() for s in response.xpath('//div/p/text()').getall()])
