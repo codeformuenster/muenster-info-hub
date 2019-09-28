@@ -7,6 +7,8 @@ import RoomIcon from "@material-ui/icons/Room";
 import ClockIcon from "@material-ui/icons/WatchLater";
 import LabelIcon from "@material-ui/icons/Label";
 import DirectionsIcon from '@material-ui/icons/Directions';
+import InfoIcon from '@material-ui/icons/Info';
+
 
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -87,6 +89,9 @@ const useStyles = makeStyles(theme => ({
   labelIcon: {
     color: 'rgba(0, 0, 0, 0.54)'
   },
+  infoIcon: {
+    color: '#4666FF'
+  },
   directionsIcon: {
     marginLeft: theme.spacing(1),
   },
@@ -107,7 +112,7 @@ function getMapsLink(place, address, lat, lon) {
   }
 }
 
-function EventCard({ title, link, time, place, address, tags, image, description, lat, lon }) {
+function EventCard({ source, title, link, time, place, address, tags, image, description, lat, lon }) {
   const classes = useStyles();
 
   const [isExpanded, setExpanded] = React.useState(false);
@@ -145,6 +150,12 @@ function EventCard({ title, link, time, place, address, tags, image, description
                     <LabelIcon className={classes.labelIcon}/>
                   </ListItemIcon>
                   <ListItemText primary={tags.join(", ")} />
+                </ListItem>
+                <ListItem dense={true} className={classes.listItem}>
+                  <ListItemIcon className={classes.eventStats}>
+                    <InfoIcon className={classes.infoIcon}/>
+                  </ListItemIcon>
+                  <ListItemText primary={source} />
                 </ListItem>
               </List>
             </Typography>

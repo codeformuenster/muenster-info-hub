@@ -68,6 +68,7 @@ const DataProvider = ({ children }) => {
             start_date,
             images,
             location_name,
+            source,
             location_address,
             description
           }
@@ -76,6 +77,7 @@ const DataProvider = ({ children }) => {
           title: title,
           time: new Date(start_date),
           image: images ? images[0].image_url : null,
+          source,
           link,
           description,
           place: location_name,
