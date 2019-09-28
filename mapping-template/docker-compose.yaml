@@ -1,0 +1,6 @@
+version: '2.2'
+services:
+  mapping-template:
+    build: .
+    environment:
+      - ELASTICSEARCH_URL_PREFIX

@@ -287,7 +287,7 @@ class TopEventsSpider(scrapy.Spider):
             content["end_date"] = str(event["end_date"]).replace(" ","T")+"Z"
 
         res = self.es.index(
-            index=(index_prefix + "infohub"),
+            index=(index_prefix + "events"),
             doc_type="_doc",
             body=content,
             id="event_" + event["pos"],
