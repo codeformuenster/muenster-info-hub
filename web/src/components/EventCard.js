@@ -11,12 +11,10 @@ import InfoIcon from '@material-ui/icons/Info';
 
 
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
-import IconButton from '@material-ui/core/IconButton';
 
 
 import List from "@material-ui/core/List";
@@ -114,8 +112,6 @@ function getMapsLink(place, address, lat, lon) {
 
 function EventCard({ source, title, link, time, place, address, tags, image, description, lat, lon }) {
   const classes = useStyles();
-
-  const [isExpanded, setExpanded] = React.useState(false);
 
   return (
     <Card className={classes.card} raised={true}>
