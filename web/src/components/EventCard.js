@@ -2,20 +2,18 @@ import React from "react";
 import * as moment from "moment";
 import "moment/locale/de";
 import Typography from "@material-ui/core/Typography";
-import { Link } from '@material-ui/core';
+import { Link } from "@material-ui/core";
 import RoomIcon from "@material-ui/icons/Room";
 import ClockIcon from "@material-ui/icons/WatchLater";
 import LabelIcon from "@material-ui/icons/Label";
-import DirectionsIcon from '@material-ui/icons/Directions';
-import InfoIcon from '@material-ui/icons/Info';
-
+import DirectionsIcon from "@material-ui/icons/Directions";
+import InfoIcon from "@material-ui/icons/Info";
 
 import Card from "@material-ui/core/Card";
-import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
-
 
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -31,7 +29,17 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
   card: {
-    margin: theme.spacing(2)
+    margin: theme.spacing(2),
+    flex: "0 0 100%",
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      flex: "0 0 50%",
+      width: "50%"
+    },
+    [theme.breakpoints.up("md")]: {
+      flex: "0 0 33%",
+      width: "33%"
+    }
   },
   tag: {
     fontVariant: "small-caps"
@@ -54,18 +62,18 @@ const useStyles = makeStyles(theme => ({
     transition: "height 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
   },
   eventStats: {
-    minWidth: 35,
+    minWidth: 35
   },
   eventDetails: {
     color: theme.palette.grey[800],
     backgroundColor: theme.palette.grey[300],
-    '& .MuiExpansionPanelSummary-content': {
-      display: 'none',
+    "& .MuiExpansionPanelSummary-content": {
+      display: "none"
     },
-    '& .MuiIconButton-edgeEnd': {
-      marginRight: 'unset'
+    "& .MuiIconButton-edgeEnd": {
+      marginRight: "unset"
     },
-    '& .MuiExpansionPanelSummary-expandIcon': {
+    "& .MuiExpansionPanelSummary-expandIcon": {
       backgroundColor: theme.palette.grey[400],
       padding: 6,
       margin: 6
@@ -79,38 +87,50 @@ const useStyles = makeStyles(theme => ({
     padding: 0
   },
   clockIcon: {
-    color: '#d70f64'
+    color: "#d70f64"
   },
   roomIcon: {
-    color: '#00a396'
+    color: "#00a396"
   },
   labelIcon: {
-    color: 'rgba(0, 0, 0, 0.54)'
+    color: "rgba(0, 0, 0, 0.54)"
   },
   infoIcon: {
-    color: '#4666FF'
+    color: "#4666FF"
   },
   directionsIcon: {
-    marginLeft: theme.spacing(1),
+    marginLeft: theme.spacing(1)
   },
   directionsButton: {
-    width: '100%'
-  },
+    width: "100%"
+  }
 }));
 
 function getMapsLink(place, address, lat, lon) {
   if (lat && lon) {
-    return `http://maps.google.com/?ll=${lat},${lon}`
+    return `http://maps.google.com/?ll=${lat},${lon}`;
   } else if (place && address) {
-   return `http://maps.google.com/?q=${place}+${address}`
+    return `http://maps.google.com/?q=${place}+${address}`;
   } else if (address) {
-   return `http://maps.google.com/?q=${address}`
+    return `http://maps.google.com/?q=${address}`;
   } else {
-   return `http://maps.google.com/?q=${place}`
+    return `http://maps.google.com/?q=${place}`;
   }
 }
 
-function EventCard({ source, title, link, time, place, address, tags, image, description, lat, lon }) {
+function EventCard({
+  source,
+  title,
+  link,
+  time,
+  place,
+  address,
+  tags,
+  image,
+  description,
+  lat,
+  lon
+}) {
   const classes = useStyles();
 
   return (
@@ -131,25 +151,25 @@ function EventCard({ source, title, link, time, place, address, tags, image, des
               <List disablePadding={true}>
                 <ListItem dense={true} className={classes.listItem}>
                   <ListItemIcon className={classes.eventStats}>
-                    <ClockIcon className={classes.clockIcon}/>
+                    <ClockIcon className={classes.clockIcon} />
                   </ListItemIcon>
                   <ListItemText primary={moment(time).fromNow()} />
                 </ListItem>
                 <ListItem dense={true} className={classes.listItem}>
                   <ListItemIcon className={classes.eventStats}>
-                    <RoomIcon className={classes.roomIcon}/>
+                    <RoomIcon className={classes.roomIcon} />
                   </ListItemIcon>
                   <ListItemText primary={place} />
                 </ListItem>
                 <ListItem dense={true} className={classes.listItem}>
                   <ListItemIcon className={classes.eventStats}>
-                    <LabelIcon className={classes.labelIcon}/>
+                    <LabelIcon className={classes.labelIcon} />
                   </ListItemIcon>
                   <ListItemText primary={tags.join(", ")} />
                 </ListItem>
                 <ListItem dense={true} className={classes.listItem}>
                   <ListItemIcon className={classes.eventStats}>
-                    <InfoIcon className={classes.infoIcon}/>
+                    <InfoIcon className={classes.infoIcon} />
                   </ListItemIcon>
                   <ListItemText primary={source} />
                 </ListItem>
@@ -163,18 +183,21 @@ function EventCard({ source, title, link, time, place, address, tags, image, des
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
-        >
-        </ExpansionPanelSummary>
+        ></ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Typography>
-            {description}
-          </Typography>
+          <Typography>{description}</Typography>
         </ExpansionPanelDetails>
-        <Button href={getMapsLink(place, address, lat, lon)} target="_blank" rel="noopener" variant="contained" color="secondary" className={classes.directionsButton}>
-            Bring mich hin!
-            <DirectionsIcon className={classes.directionsIcon} />
+        <Button
+          href={getMapsLink(place, address, lat, lon)}
+          target="_blank"
+          rel="noopener"
+          variant="contained"
+          color="secondary"
+          className={classes.directionsButton}
+        >
+          Bring mich hin!
+          <DirectionsIcon className={classes.directionsIcon} />
         </Button>
-
       </ExpansionPanel>
     </Card>
   );
