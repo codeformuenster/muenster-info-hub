@@ -1,12 +1,20 @@
 import React from "react";
 import EventCard from "./EventCard";
 import DataContext from "../DataContext";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+  eventslist: {
+    display: "flex"
+  }
+}));
 
 const Events = () => {
   const { events } = React.useContext(DataContext);
+  const classes = useStyles();
 
   return (
-    <>
+    <div className={classes.eventslist}>
       {events.map(event => (
         <EventCard
           key={event.id}
@@ -22,7 +30,7 @@ const Events = () => {
           description={event.description}
         />
       ))}
-    </>
+    </div>
   );
 };
 
