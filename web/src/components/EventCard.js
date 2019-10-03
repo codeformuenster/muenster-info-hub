@@ -30,16 +30,6 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles(theme => ({
   card: {
     margin: theme.spacing(2),
-    flex: "0 0 100%",
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      flex: "0 0 50%",
-      width: "50%"
-    },
-    [theme.breakpoints.up("md")]: {
-      flex: "0 0 33%",
-      width: "33%"
-    }
   },
   tag: {
     fontVariant: "small-caps"
