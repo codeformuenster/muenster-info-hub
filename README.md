@@ -1,8 +1,18 @@
 # muenster-info-hub
 
+## Project info
+
+Directories: 
+* `elasticsearch` - Elasticsearch related files
+* `html-src` - Source code for websites on the subdomains
+* `import`- Import-scripts for the various event sources. Run periodically to import events into the elasticsearch database
+* `html` - Html-content for production. Will be served via the corresponding subdomains on the webserver
+
+## Start developing
 
 start elasticsearch
 ```bash
+cd elasticsearch
 export COMPOSE_PROJECT_NAME="msinfohub"
 export ELASTICSEARCH_URL_PREFIX="http://elasticsearch:9200/msinfohub-"
 
