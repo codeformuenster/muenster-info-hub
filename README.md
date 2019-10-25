@@ -2,11 +2,15 @@
 
 ## Project info
 
+Created during MünsterHack 2019. Searchengine and open API for Münster related events.
+
 Directories: 
+
 * `elasticsearch` - Elasticsearch related files
-* `html-src` - Source code for websites on the subdomains
 * `import`- Import-scripts for the various event sources. Run periodically to import events into the elasticsearch database
 * `html` - Html-content for production. Will be served via the corresponding subdomains on the webserver
+  * Content of the directory _app.muenster-jetzt.de_ is generated via the repository "muenster-info-app": https://github.com/codeformuenster/muenster-info-app 
+
 
 ## Start developing
 
