@@ -101,3 +101,19 @@ docker-compose up --build
 * Show content of mein-ms-places index: https://api.muenster.jetzt/infohub/_search
 * Search for something: https://api.muenster.jetzt/infohub/_search?q=something
 * Search in a specific field: https://api.muenster.jetzt/infohub/_search?q=field:something
+
+### Elasticsearch Query Anleitung 
+Man muss nicht unbedingt komplexe JSON-Queries an Elasticsearch schicken, sondern man kann auch viel durch simple GET-Requests erreichen.
+
+Wie die Abfragesprache im Parameter “q” funktioniert: 
+https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html
+Hier steht wie man nur einzelne Felder zurückbeommt:
+https://www.elastic.co/guide/en/elasticsearch/reference/7.3/docs-get.html#docs-get
+
+### Beispiel-Query: 
+https://api.muenster.jetzt/infohub/_search?_source=source,geo,start_date&size=200&q=start_date:%3Enow
+
+Erklärung der Beispiel-Query: 
+ * Parameter "q" fragt in diesem Fall nur Events ab, die _start_date_ in der Zukunft haben
+ * Wegen "_source"-Parameter werden nur die Felder source, geo, start_date zurückgegeben 
+ * Durch "size" werden maximal 200 results returnt 
