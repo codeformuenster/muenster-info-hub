@@ -1,8 +1,22 @@
 # muenster-info-hub
 
+## Project info
+
+Created during MünsterHack 2019. Searchengine and open API for Münster related events.
+
+Directories: 
+
+* `elasticsearch` - Elasticsearch related files
+* `import`- Import-scripts for the various event sources. Run periodically to import events into the elasticsearch database
+* `html` - Html-content for production. Will be served via the corresponding subdomains on the webserver
+  * Content of the directory _app.muenster-jetzt.de_ is generated via the repository "muenster-info-app": https://github.com/codeformuenster/muenster-info-app 
+
+
+## Start developing
 
 start elasticsearch
 ```bash
+cd elasticsearch
 export COMPOSE_PROJECT_NAME="msinfohub"
 export ELASTICSEARCH_URL_PREFIX="http://elasticsearch:9200/msinfohub-"
 
@@ -88,3 +102,19 @@ docker-compose up --build
 * Show content of mein-ms-places index: https://api.muenster.jetzt/infohub/_search
 * Search for something: https://api.muenster.jetzt/infohub/_search?q=something
 * Search in a specific field: https://api.muenster.jetzt/infohub/_search?q=field:something
+
+### Elasticsearch Query Anleitung 
+Man muss nicht unbedingt komplexe JSON-Queries an Elasticsearch schicken, sondern man kann auch viel durch simple GET-Requests erreichen.
+
+Wie die Abfragesprache im Parameter “q” funktioniert: 
+https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html
+Hier steht wie man nur einzelne Felder zurückbeommt:
+https://www.elastic.co/guide/en/elasticsearch/reference/7.3/docs-get.html#docs-get
+
+### Beispiel-Query: 
+https://api.muenster.jetzt/infohub/_search?_source=source,geo,start_date&size=200&q=start_date:%3Enow
+
+Erklärung der Beispiel-Query: 
+ * Parameter "q" fragt in diesem Fall nur Events ab, die _start_date_ in der Zukunft haben
+ * Wegen "_source"-Parameter werden nur die Felder source, geo, start_date zurückgegeben 
+ * Durch "size" werden maximal 200 results returnt 
