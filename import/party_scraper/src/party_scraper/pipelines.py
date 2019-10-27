@@ -12,7 +12,11 @@ import os
 
 from elasticsearch import Elasticsearch
 
-elasticsearch_url, index_prefix = os.environ['ELASTICSEARCH_URL_PREFIX'].rsplit("/", maxsplit=1)
+
+if 'ELASTICSEARCH_URL_PREFIX' in os.environ:
+    elasticsearch_url, index_prefix = os.environ['ELASTICSEARCH_URL_PREFIX'].rsplit("/", maxsplit=1)
+else:
+    elasticsearch_url, index_prefix = None, None
 # es = elasticsearch.Elasticsearch(elasticsearch_url)
 
 # ES_URL = "https://api.muenster.jetzt/"
@@ -44,7 +48,8 @@ class JsonWithEncodingPipeline(object):
         if not item:
             return
 
-        self._post_elastic(dict(item))
+        if elasticsearch_url:
+            self._post_elastic(dict(item))
         return item
 
     def spider_closed(self, spider):
