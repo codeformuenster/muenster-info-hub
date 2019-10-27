@@ -11,3 +11,5 @@ services:
     command: scrapy crawl virtualnights
     environment:
       - ELASTICSEARCH_URL_PREFIX
+      - SCRAPE_START
+      - SCRAPE_END

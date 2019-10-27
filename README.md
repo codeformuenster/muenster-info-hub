@@ -54,9 +54,10 @@ export MAPQUEST_KEY="FIXME"
 cd ./import-events-muenster.de
 docker-compose up --build
 
-# import partyphase
+# import partyphase and virtualnights
 cd ./party_scraper
-docker-compose up --build
+docker-compose up --build ODER
+SCRAPE_START=yyyy-mm-dd SCRAPE_END=yyyy-mm-dd docker-compose up --build
 
 # import wn
 cd ./import/wn

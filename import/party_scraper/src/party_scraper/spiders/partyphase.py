@@ -1,4 +1,5 @@
 import scrapy
+import os
 from party_scraper import items
 from datetime import datetime
 
@@ -21,9 +22,17 @@ MONTH = {
 class EventURLSpider(scrapy.Spider):
     name = "partyphase"
     allowed_domains = ["muenster.partyphase.net"]
-    start_urls = [
-        'http://muenster.partyphase.net/veranstaltungskalender-muenster/',
-    ]
+
+    if ('SCRAPE_START' in os.environ and 'SCRAPE_END' in os.environ):
+        start = os.environ['SCRAPE_START']
+        end = os.environ['SCRAPE_END']
+        start_urls = [
+            f'http://muenster.partyphase.net/veranstaltungskalender-muenster/?eme_scope_filter={start}--{end}&eme_submit_button=Submit&eme_eventAction=filter',
+        ]
+    else:
+        start_urls = [
+            'http://muenster.partyphase.net/veranstaltungskalender-muenster/',
+        ]
 
     def parse(self, response):
         # split events
@@ -35,7 +44,9 @@ class EventURLSpider(scrapy.Spider):
 
         # crawl events
         for event_url in event_urls:
-            yield scrapy.Request(event_url, callback=self._parse_event)
+            yield scrapy.Request(
+                event_url,
+                callback=self._parse_event)
 
     def _get_location_address(self, url):
         response = scrapy.Request(url=url)
