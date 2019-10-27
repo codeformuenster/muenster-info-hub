@@ -13,22 +13,23 @@ import os
 from elasticsearch import Elasticsearch
 
 
+http_auth = scheme = None
+if 'ELASTICSEARCH_USERNAME' in os.environ and 'ELASTICSEARCH_PASSWORD' in os.environ:
+    http_auth = (
+        os.environ['ELASTICSEARCH_USERNAME'],
+        os.environ['ELASTICSEARCH_PASSWORD']
+    )
+    scheme = 'https'
+
 if 'ELASTICSEARCH_URL_PREFIX' in os.environ:
     elasticsearch_url, index_prefix = os.environ['ELASTICSEARCH_URL_PREFIX'].rsplit("/", maxsplit=1)
 else:
     elasticsearch_url, index_prefix = None, None
-# es = elasticsearch.Elasticsearch(elasticsearch_url)
-
-# ES_URL = "https://api.muenster.jetzt/"
-#ES_URL = "https://data.mein-ms.de/"
-
-#FILE_NAME = 'scraped_data_utf8.json'
-
 
 class JsonWithEncodingPipeline(object):
     def _post_elastic(self, content):
 
-        Elasticsearch(elasticsearch_url).index(
+        Elasticsearch(elasticsearch_url, http_auth=http_auth, scheme=scheme).index(
             index=(f"{index_prefix}events"),
             doc_type="_doc",
             body=content

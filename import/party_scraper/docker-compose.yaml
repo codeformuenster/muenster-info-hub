@@ -5,11 +5,17 @@ services:
     command: scrapy crawl partyphase
     environment:
       - ELASTICSEARCH_URL_PREFIX
+      - ELASTICSEARCH_USERNAME
+      - ELASTICSEARCH_PASSWORD
+      - SCRAPE_START
+      - SCRAPE_END
 
   import-virtualnights:
     build: .
     command: scrapy crawl virtualnights
     environment:
       - ELASTICSEARCH_URL_PREFIX
+      - ELASTICSEARCH_USERNAME
+      - ELASTICSEARCH_PASSWORD
       - SCRAPE_START
       - SCRAPE_END
