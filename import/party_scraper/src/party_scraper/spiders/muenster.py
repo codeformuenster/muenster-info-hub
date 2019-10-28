@@ -30,7 +30,7 @@ from_src_date = lambda str: datetime.datetime.strptime(str, '%Y-%m-%d')
 to_date_str = lambda date: datetime.datetime.strftime(date, '%d.%m.%Y')
 date_trans = lambda str: to_date_str(from_src_date(str))
 
-class EventsSpider(scrapy.Spider):
+class MuensterSpider(scrapy.Spider):
     name = "muenster"
     allowed_domains = ["muenster.de"]
     start_url = (
