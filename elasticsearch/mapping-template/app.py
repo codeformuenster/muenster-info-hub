@@ -3,7 +3,16 @@ import os
 import json
 
 elasticsearch_url, index_prefix = os.environ["ELASTICSEARCH_URL_PREFIX"].rsplit("/", maxsplit=1)
-es = elasticsearch.Elasticsearch(elasticsearch_url)
+
+http_auth = scheme = None
+if 'ELASTICSEARCH_USERNAME' in os.environ and 'ELASTICSEARCH_PASSWORD' in os.environ:
+    http_auth = (
+        os.environ['ELASTICSEARCH_USERNAME'],
+        os.environ['ELASTICSEARCH_PASSWORD']
+    )
+    scheme = 'https'
+
+es = elasticsearch.Elasticsearch(elasticsearch_url, http_auth=http_auth, scheme=scheme)
 
 with open("mapping.json") as f:
     doc = json.load(f)
@@ -19,3 +28,5 @@ with open("mapping.json") as f:
         name=f"{index_prefix}events",
         body=template
     )
+
+# FIXME log success/error
