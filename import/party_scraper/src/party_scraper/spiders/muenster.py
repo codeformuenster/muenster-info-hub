@@ -26,67 +26,41 @@ import pytz
 from party_scraper import items
 
 
-from_src_date = lambda str: datetime.datetime.strptime(str, '%Y-%m-%d')
-to_date_str = lambda date: datetime.datetime.strftime(date, '%d.%m.%Y')
-date_trans = lambda str: to_date_str(from_src_date(str))
+def clean_date(str, inf='%Y-%m-%d', outf='%d.%m.%Y'):
+    date = datetime.datetime.strptime(str, inf)
+    news = datetime.datetime.strftime(date, outf)
+    return news
+
 
 class MuensterSpider(scrapy.Spider):
+
+    mapquest_api_key = None
     name = "muenster"
     allowed_domains = ["muenster.de"]
     start_url = (
         "https://www.muenster.de/veranstaltungskalender/scripts/frontend/suche.php"
     )
-    if "ELASTICSEARCH_URL_PREFIX" in os.environ:
-        elasticsearch_url_param = os.environ["ELASTICSEARCH_URL_PREFIX"]
-    if ('SCRAPE_START' in os.environ and 'SCRAPE_END' in os.environ):
-        start = date_trans(os.environ['SCRAPE_START'])
-        end = date_trans(os.environ['SCRAPE_END'])
-    else:
-        req_start_date = None
-        req_end_date = None
-
 
     def start_requests(self):
-        self.req_start_date = getattr(self, "start", None)
-        self.req_end_date = getattr(self, "end", None)
-        self.req_window = getattr(self, "window", None)
-        self.mapquest_api_key = getattr(self, "mapquest_key", None)
 
-        if self.req_window is not None and self.req_end_date is not None:
-            self.log("Provice either a window or a end date, but not both")
-            raise ValueError("Provie either a window or a end date, but not both")
+        if "ELASTICSEARCH_URL_PREFIX" in os.environ:
+            self.elasticsearch_url_param = os.environ["ELASTICSEARCH_URL_PREFIX"]
+
+        if ('SCRAPE_START' in os.environ and 'SCRAPE_END' in os.environ):
+            self.start = clean_date(os.environ['SCRAPE_START'])
+            self.end = clean_date(os.environ['SCRAPE_END'])
+        else:
+            self.start = datetime.strftime(datetime.today(), '%Y-%m-%d')
+            self.end = datetime.strftime(datetime.today() + timedelta(days=6), '%Y-%m-%d')
+
+        self.log("------------ START PARAMETERS -------------- ")
+        self.log(f"START: {self.start}")
+        self.log(f"END: {self.end}")
+        self.log("------------  ")
 
         if self.mapquest_api_key is None and "MAPQUEST_KEY" in os.environ:
             self.mapquest_api_key = os.environ["MAPQUEST_KEY"]
 
-        if self.req_start_date is None:
-            start = datetime.datetime.now(pytz.timezone("Europe/Berlin")) + datetime.timedelta(days=1)
-            self.req_start_date = start.strftime("%d.%m.%Y")
-            end = datetime.datetime.now(pytz.timezone("Europe/Berlin")) + datetime.timedelta(days=8)
-            self.req_end_date = end.strftime("%d.%m.%Y")
-
-        if self.req_window is not None:
-            try:
-                self.req_window = int(self.req_window)
-            except:
-                self.log("Provide a integer as window")
-                raise ValueError("Provide a integer as window")
-
-            if self.req_window < 0:
-                self.log("Provide a positive integer as window")
-                raise ValueError("Provice a positive integer as window")
-
-            if self.req_start_date == "today":
-                start = datetime.datetime.now(pytz.timezone("Europe/Berlin"))
-            else:
-                start = datetime.datetime.strptime(self.req_start_date, "%d.%m.%Y")
-            end = start + datetime.timedelta(days=self.req_window)
-            self.req_start_date = start.strftime("%d.%m.%Y")
-            self.req_end_date = end.strftime("%d.%m.%Y")
-
-        elif self.req_start_date is not "today" and self.req_end_date is None:
-            self.log('End date not given, using "today" as start date.')
-            self.req_start_date = "today"
 
         if hasattr(self, "elasticsearch_url_param") == False:
             self.elasticsearch_url_param = None
@@ -96,22 +70,14 @@ class MuensterSpider(scrapy.Spider):
         )
 
         # TODO: validate start/end dates
-
         yield scrapy.Request(self.start_url, self.parse)
 
     def parse(self, response):
         """Submit the search form searching for events that start today."""
 
-        datum_von = ""
-        datum_bis = ""
-        zeitraum = ""
-
-        if self.req_start_date is None or self.req_start_date is "today":
-            zeitraum = "heute"
-        else:
-            datum_von = self.req_start_date
-            datum_bis = self.req_end_date
-            zeitraum = "zeitraum"
+        datum_von = self.start
+        datum_bis = self.end
+        zeitraum = 'zeitraum'
 
         self.log("------------ START PARAMETERS -------------- ")
         self.log("START: " + datum_von)
