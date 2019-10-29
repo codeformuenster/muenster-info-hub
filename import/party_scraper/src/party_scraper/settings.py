@@ -14,7 +14,7 @@ BOT_NAME = 'party_scraper'
 SPIDER_MODULES = ['party_scraper.spiders']
 NEWSPIDER_MODULE = 'party_scraper.spiders'
 
-
+FEED_EXPORT_ENCODING = 'utf-8'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'party_scraper (+http://www.yourdomain.com)'
 
