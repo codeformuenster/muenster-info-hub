@@ -1,7 +1,7 @@
 import scrapy
 import os
 from party_scraper import items
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 MONTH = {
@@ -19,20 +19,35 @@ MONTH = {
     'Dezember': 'December'
 }
 
-class EventURLSpider(scrapy.Spider):
+def clean_date(str, inf='%Y-%m-%d', outf='%Y-%m-%d'):
+    date = datetime.strptime(str, inf)
+    news = datetime.strftime(date, outf)
+    return news
+
+
+class PartyPhaseSpider(scrapy.Spider):
     name = "partyphase"
     allowed_domains = ["muenster.partyphase.net"]
 
-    if ('SCRAPE_START' in os.environ and 'SCRAPE_END' in os.environ):
-        start = os.environ['SCRAPE_START']
-        end = os.environ['SCRAPE_END']
+    def start_requests(self):
+        if ('SCRAPE_START' in os.environ and 'SCRAPE_END' in os.environ):
+            start = clean_date(os.environ['SCRAPE_START'])
+            end = clean_date(os.environ['SCRAPE_END'])
+        else:
+            start = datetime.strftime(datetime.today(), '%Y-%m-%d')
+            end = datetime.strftime(datetime.today() + timedelta(days=6), '%Y-%m-%d')
         start_urls = [
             f'http://muenster.partyphase.net/veranstaltungskalender-muenster/?eme_scope_filter={start}--{end}&eme_submit_button=Submit&eme_eventAction=filter',
         ]
-    else:
-        start_urls = [
-            'http://muenster.partyphase.net/veranstaltungskalender-muenster/',
-        ]
+
+        self.log("------------ START PARAMETERS -------------- ")
+        self.log(f"START: {start}")
+        self.log(f"END: {end}")
+        self.log("------------  ")
+
+        for url in start_urls:
+            yield scrapy.Request(url=url, callback=self.parse)
+
 
     def parse(self, response):
         # split events
