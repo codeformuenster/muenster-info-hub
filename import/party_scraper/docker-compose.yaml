@@ -1,5 +1,15 @@
 version: '2.2'
 services:
+  import-muenster:
+    build: .
+    command: scrapy crawl muenster
+    environment:
+      - ELASTICSEARCH_URL_PREFIX
+      - ELASTICSEARCH_USERNAME
+      - ELASTICSEARCH_PASSWORD
+      - SCRAPE_START
+      - SCRAPE_END
+
   import-partyphase:
     build: .
     command: scrapy crawl partyphase
