@@ -97,8 +97,10 @@ docker-compose up --build
 
 ## Elasticsearch/API debuggen: 
 
+The index name that we currently use in production is: **msinfohub-events**
+
+* Show indexes: https://api.muenster.jetzt/_cat/indices
 * Mapping anzeigen: https://api.muenster.jetzt/infohub/_mapping
-* Show indexes: https://api.muenster.jetzt/infohub/_cat/indices
 * Show content of mein-ms-places index: https://api.muenster.jetzt/infohub/_search
 * Search for something: https://api.muenster.jetzt/infohub/_search?q=something
 * Search in a specific field: https://api.muenster.jetzt/infohub/_search?q=field:something
