@@ -7,32 +7,103 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/19.2.3/css/dx.common.css" />
-  <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/19.2.3/css/dx.light.css" />
+  <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/19.2.3/css/dx.dark.css" />
   <script src="https://cdn3.devexpress.com/jslib/19.2.3/js/dx.all.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Chewy&display=swap" rel="stylesheet"> 
 
+  <style>
+    .mj-headline {
+      font-family: 'Chewy', cursive;
+    }
+  </style>
 </head>
 
 <body>
-  <div >
-    <div style="float:left" id="pie"></div>
-    <div id="pie2"></div>
-  </div>
+    <nav class="navbar navbar-dark bg-dark shadow">
+        <a class="navbar-brand" href="#">
+          <img src="img/logo-muenster-jetzt-white.png" height="50px" alt="münster.jetzt">
+          
+        </a>
+        <h2 class="text-white float-left mj-headline">
+        Veranstaltungsstatistik / Dashboard
+        </h2>
+    </nav>
+
+    <div class="container">
+        <br />
+        <h2 class="text-center mj-headline">
+            Zukünftige Veranstaltungen in der Datenbank
+        </h2>
+        <div class="row dx-viewport">
+          <div class="col-sm">
+            <div id="pie"></div>
+          </div>
+          <div class="col-sm">
+            <div id="pie2"></div>
+          </div>
+          <div class="col-sm">
+            <div id="pie3"></div>
+          </div>
+        </div>
+      </div>
+        
+    <div class="container">
+      <div class="row">
+          <div class="col-sm dx-viewport">
+              <div id="chart"></div>
+          </div>
+      </div>
+    </div>
+
 
   <script>
-   
-    $(function(){
-      $.getJSON( "https://api.muenster.jetzt/msinfohub-events/_search?_source=source,geo,start_date&size=200&q=start_date:%3Enow", function( data ) {
-        var items = {};
-        var geos = {};
-        $.each( data.hits.hits, function( key, val ) {
-          if (val._source.source  in items) {
-            items[ val._source.source ] ++;
+   "use strict";
 
+    $(function(){
+      $.getJSON( "https://api.muenster.jetzt/msinfohub-events/_search?_source=source,geo,images,start_date&size=200&q=start_date:%3Enow", function( data ) {
+        var items = {};
+         var geos = {};
+        var imageItems = {};
+        var dateList = {};
+        var graphSeries = {};
+        $.each( data.hits.hits, function( key, val ) {
+         if (val._source.source  in items) {
+            items[ val._source.source ] ++;
+            
+            var day = val._source.start_date.substring(0, 10)
+            var ssource = val._source.source;
+            if  (day in dateList) {
+              var currentSrc = dateList[day];
+              if (ssource in currentSrc) {
+                dateList[day][ssource] ++;
+              } else {
+                dateList[day][ssource] = 1;
+              }
+            } else {
+              dateList[ day ] = {
+                theday: day
+              };
+              dateList[day][ssource] = 1;
+            }
+
+            if (!(val._source.source in graphSeries)) {
+              graphSeries[ val._source.source ] = { valueField: val._source.source, name: val._source.source};
+            } 
+            
             if ("geo" in val._source) {
               if  (val._source.source in geos) {
                 geos[ val._source.source ] ++;
               } else {
-                geos[ val._source.source ] = 0;
+                geos[ val._source.source ] = 1;
+              }
+            }
+
+            if ("images" in val._source) {
+              if  (val._source.source in imageItems) {
+                imageItems[ val._source.source ] ++;
+              } else {
+                imageItems[ val._source.source ] = 1;
               }
             }
 
@@ -57,11 +128,19 @@
           });
         });
         
+        var imageSource = []
+        $.each( imageItems, function (key, val) {
+          imageSource.push({
+            quelle: key,
+            anzahl: val
+          });
+        });
+
+        console.log("geoitems", geos);
+        console.log("imageitems", imageItems);
+
+
         var chartSettings = {
-            size: {
-                width: 500
-            },
-            palette: "bright",
             dataSource: dataSource,
             series: [
                 {
@@ -76,7 +155,8 @@
                     }
                 }
             ],
-            title: "Anzahl zukünftiger Veranstaltungen",
+            theme: "generic.dark",
+            title: "Gesamt",
             "export": {
                 enabled: true
             },
@@ -95,9 +175,60 @@
         $("#pie").dxPieChart(chartSettings);
 
         chartSettings["dataSource"] = geoSource;
-        chartSettings["title"] = "Veranstaltungen mit Geokoordinaten"
+        chartSettings["title"] = "Mit Geo"
         $("#pie2").dxPieChart(chartSettings);
         
+        chartSettings["dataSource"] = imageSource;
+        chartSettings["title"] = "Mit Bild"
+        $("#pie3").dxPieChart(chartSettings);
+
+        var allDays = Object.keys(dateList);
+        allDays.sort();
+        
+        var thatarray = []
+        $.each( allDays.slice(0,20), function (key, val) {
+          thatarray.push(dateList[val]);
+        });
+        console.log("alldays", allDays)
+        console.log("thatarray", thatarray)
+
+
+        $("#chart").dxChart({
+            dataSource: thatarray,
+            commonSeriesSettings: {
+                argumentField: "theday",
+                type: "stackedBar"
+            },
+            series: $.map(graphSeries, function(value, index) {
+                return [value];
+            }),
+            legend: {
+                verticalAlignment: "bottom",
+                horizontalAlignment: "center",
+                itemTextPosition: 'top'
+            },
+            valueAxis: {
+                title: {
+                    text: "Anzahl Veranstaltungen"
+                },
+                position: "right"
+            },
+            title: "Veranstaltungen pro Tag",
+            "export": {
+                enabled: true
+            },
+            tooltip: {
+                enabled: true,
+                location: "edge",
+                customizeTooltip: function (arg) {
+                  console.log(arg)
+                    return {
+                        text: "Date " + arg.argument + "<br /><br />" + arg.seriesName + ":<br />" + arg.valueText + " event(s)"
+                    };
+                }
+            }
+        });
+
         function toggleVisibility(item) {
             if(item.isVisible()) {
                 item.hide();
