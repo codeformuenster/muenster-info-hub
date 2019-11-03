@@ -103,7 +103,9 @@ The index name that we currently use in production is: **msinfohub-events**
 * Mapping anzeigen: https://api.muenster.jetzt/infohub/_mapping
 * Show content of mein-ms-places index: https://api.muenster.jetzt/infohub/_search
 * Search for something: https://api.muenster.jetzt/infohub/_search?q=something
-* Search in a specific field: https://api.muenster.jetzt/infohub/_search?q=field:something
+* Search in a specific field: https://api.muenster.jetzt/msinfohub-events/_search?q=field:something
+* Sort the searchresults: https://api.muenster.jetzt/msinfohub-events/_search?sort=start_date
+* Limit number of results: https://api.muenster.jetzt/msinfohub-events/_search?size=10
 
 ### Elasticsearch Query Anleitung 
 Man muss nicht unbedingt komplexe JSON-Queries an Elasticsearch schicken, sondern man kann auch viel durch simple GET-Requests erreichen.
