@@ -61,7 +61,7 @@
    "use strict";
 
     $(function(){
-      $.getJSON( "https://api.muenster.jetzt/msinfohub-events/_search?_source=source,geo,images,start_date&size=200&q=start_date:%3Enow", function( data ) {
+      $.getJSON( "https://api.muenster.jetzt/msinfohub-events/_search?_source=source,geo,images,start_date&size=200&q=start_date:%3Enow&sort=start_date", function( data ) {
         var items = {};
          var geos = {};
         var imageItems = {};
