@@ -1,0 +1,9 @@
+version: '2.2'
+services:
+  dedup-elasticsearch:
+    build: .
+    # command:
+    environment:
+      - ELASTICSEARCH_URL_PREFIX
+      - ELASTICSEARCH_USERNAME
+      - ELASTICSEARCH_PASSWORD
