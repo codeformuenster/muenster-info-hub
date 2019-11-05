@@ -9,6 +9,7 @@ import scrapy
 
 
 class PartyItem(scrapy.Item):
+    _id = scrapy.Field()
     title = scrapy.Field()
     subtitle = scrapy.Field()
     start_date = scrapy.Field()
