@@ -29,10 +29,16 @@ else:
 class JsonWithEncodingPipeline(object):
     def _post_elastic(self, content):
 
+        # generate unique id for event
+        eventId = 'pa_scr_' + content['title'] + content['start_date']
+        content['id'] = eventId
+
+        # insert into elasticsearch
         Elasticsearch(elasticsearch_url, http_auth=http_auth, scheme=scheme).index(
             index=(f"{index_prefix}events"),
             doc_type="_doc",
-            body=content
+            body=content,
+            id=eventId
         )
 
     def process_item(self, item, spider):
