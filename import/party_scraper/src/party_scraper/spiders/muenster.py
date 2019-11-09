@@ -22,6 +22,7 @@ import os
 import sys
 import datetime
 import pytz
+from scrapy.shell import inspect_response
 
 from party_scraper import items
 
@@ -37,11 +38,10 @@ class MuensterSpider(scrapy.Spider):
     mapquest_api_key = None
     name = "muenster"
     allowed_domains = ["muenster.de"]
-    start_url = (
-        "https://www.muenster.de/veranstaltungskalender/scripts/frontend/suche.php"
-    )
 
     def start_requests(self):
+
+        start_url = "https://www.muenster.de/veranstaltungskalender/scripts/frontend/suche.php"
 
         if "ELASTICSEARCH_URL_PREFIX" in os.environ:
             self.elasticsearch_url_param = os.environ["ELASTICSEARCH_URL_PREFIX"]
@@ -50,10 +50,10 @@ class MuensterSpider(scrapy.Spider):
             self.start = clean_date(os.environ['SCRAPE_START'])
             self.end = clean_date(os.environ['SCRAPE_END'])
         else:
-            self.start = datetime.strftime(datetime.today(), '%Y-%m-%d')
-            self.end = datetime.strftime(datetime.today() + timedelta(days=6), '%Y-%m-%d')
+            self.start = datetime.datetime.strftime(datetime.datetime.today(), "%d.%m.%Y")
+            self.end = datetime.datetime.strftime(datetime.datetime.today() + datetime.timedelta(days=6), "%d.%m.%Y")
 
-        self.log("------------ START PARAMETERS -------------- ")
+        self.log("------------ START PARAMETERS1 -------------- ")
         self.log(f"START: {self.start}")
         self.log(f"END: {self.end}")
         self.log("------------  ")
@@ -70,7 +70,7 @@ class MuensterSpider(scrapy.Spider):
         )
 
         # TODO: validate start/end dates
-        yield scrapy.Request(self.start_url, self.parse)
+        yield scrapy.Request(start_url, self.parse)
 
     def parse(self, response):
         """Submit the search form searching for events that start today."""
@@ -79,7 +79,7 @@ class MuensterSpider(scrapy.Spider):
         datum_bis = self.end
         zeitraum = 'zeitraum'
 
-        self.log("------------ START PARAMETERS -------------- ")
+        self.log("------------ START PARAMETERS2 -------------- ")
         self.log("START: " + datum_von)
         self.log("END: " + datum_bis)
         self.log("ES: " + str(self.elasticsearch_url))
@@ -87,7 +87,8 @@ class MuensterSpider(scrapy.Spider):
 
         return scrapy.FormRequest.from_response(
             response,
-            formname="submit",
+            formid="submit",
+            dont_filter=True,
             formdata={
                 "datum_bis": datum_bis,
                 "datum_von": datum_von,
@@ -102,6 +103,9 @@ class MuensterSpider(scrapy.Spider):
 
     def after_post(self, response):
         """Response here is the overview page over all events. We collect the links to the individual detail pages."""
+
+        # Uncomment following line to interactively debug the response in the browser
+        # inspect_response(response, self)
 
         detail_links = response.xpath("//a[text() = 'Details']/@href").extract()
         for href in detail_links:
