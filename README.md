@@ -36,6 +36,8 @@ echo "xdg-open http://$KIBANA_IP:5601"
 ```
 
 
+
+
 ```bash
 # delete index
 docker run --network msinfohub_default curlimages/curl:7.65.3 \
@@ -122,3 +124,12 @@ Erklärung der Beispiel-Query:
  * Parameter "q" fragt in diesem Fall nur Events ab, die _start_date_ in der Zukunft haben
  * Wegen "_source"-Parameter werden nur die Felder source, geo, start_date zurückgegeben 
  * Durch "size" werden maximal 200 results returnt 
+
+## Elasticsearch fortgeschrittene Aktionen
+
+Query per curl absenden mit der suche nach einem bestimmten Wert in einem bestimmten Feld:
+
+    curl -X POST https://api.muenster.jetzt/msinfohub-events/_search?pretty -H 'Content-Type: application/json' -d'{"query":{"term":{"source":"meinestadt.de"}}}'
+
+    # Alle Einträge einer Eventquelle löschen:
+    curl -X POST https://api.muenster.jetzt/msinfohub-events/_delete_by_query?pretty -H 'Content-Type: application/json' -d'{"query":{"term":{"source":"meinestadt.de"}}}'
