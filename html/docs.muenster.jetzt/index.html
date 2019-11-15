@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Münster.jetzt Daten-Dashboard</title>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/19.2.3/css/dx.common.css" />
+  <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/19.2.3/css/dx.dark.css" />
+  <script src="https://cdn3.devexpress.com/jslib/19.2.3/js/dx.all.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Chewy&display=swap" rel="stylesheet"> 
+
+  <style>
+    .mj-headline {
+      font-family: 'Chewy', cursive;
+    }  
+
+  /*!
+  * Start Bootstrap - Simple Sidebar (https://startbootstrap.com/template-overviews/simple-sidebar)
+  * Copyright 2013-2017 Start Bootstrap
+  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/master/LICENSE)
+  */
+
+  body {
+    overflow-x: hidden;
+  }
+
+  #wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+  }
+
+  #wrapper.toggled {
+    padding-right: 250px;
+  }
+
+  .navbar{z-index:100}
+
+  #sidebar-wrapper {
+    z-index: 10;
+    position: fixed;
+    right: 250px;
+    width: 0;
+    height: 100%;
+    margin-right: -250px;
+    overflow-y: auto;
+    background: #000;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+    padding-top:250px;
+  }
+
+  #page-content-wrapper {
+    width: 100%;
+    position: absolute;
+  }
+
+  #content {
+    padding: 0px 250px 0 0;
+
+  }
+
+  #wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: 0px;
+  }
+
+
+  /* Sidebar Styles */
+
+  .sidebar-nav {
+    top:0px;
+    position: absolute;
+    width: 250px;
+    margin: 100px 0 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+  }
+
+  .sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #999999;
+  }
+
+  .sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .sidebar-nav li a:active, .sidebar-nav li a:focus {
+    text-decoration: none;
+  }
+
+  .sidebar-nav>.sidebar-brand {
+    height: 65px;
+    font-size: 18px;
+    line-height: 60px;
+  }
+
+  .sidebar-nav>.sidebar-brand a {
+    color: #999999;
+  }
+
+  .sidebar-nav>.sidebar-brand a:hover {
+    color: #fff;
+    background: none;
+  }
+
+  @media(max-width:768px) {
+    #sidebar-wrapper {
+      display: none;
+    }
+    #content {
+      padding: 0;
+    }
+  }
+  #content h2{ margin-top:70px}
+  #content h3{ margin-top:50px}
+  #content {margin-bottom: 100px}
+</style>
+
+</head>
+
+<body>
+
+    <div id="wrapper" class="toggled">
+        
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper">
+
+          <ul class="sidebar-nav">
+              <li> <a href="#hintergrund">Hintergrund</a> </li>
+              <li> <a href="#loesung">Lösungsansatz</a> </li>
+              
+              <li> <a href="#Dokumentation">API-Dokumentation</a> </li>
+              <li>
+                  <ul><li> 
+                      <li> <a href="#Datentypen">Datentypen</a> </li>
+                      <li> <a href="#Abfragen">Einfache Abfragen</a> </li>
+                      <li> <a href="#Abfragen2">Komplexere Abfragen</a> </li>
+                      <li> <a href="#more">Weiterführende Links</a> </li>
+                  </li></ul>
+              </li>
+            </ul>
+      </div> <!-- /#sidebar-wrapper -->
+      <div id="page-content-wrapper">
+
+          <nav class="navbar navbar-dark bg-dark shadow">
+              <a class="navbar-brand" href="https://www.muenster.jetzt">
+                <img src="//stats.muenster.jetzt/img/logo-muenster-jetzt-white.png" height="50px" alt="münster.jetzt">
+                
+              </a>
+              <h2 class="text-white float-left mj-headline">
+              Projekt-Dokumentation
+              </h2>
+          </nav>
+
+        <div id="content" class="container">
+          <br /><br />
+            <h2 ><a name="hintergrund"></a>
+                Hintergrund
+            </h2>
+
+            <div class="shadow-lg p-3 mb-5 bg-white rounded float-right"><img src="img/kaminfeuer.jpg" width="300" /></div>
+
+            <p>
+              Beim MÜNSTERHACK 2019 entstand in einem Projekt-Team die Idee, eine Termin-Plattform für Münster zu bauen.
+              Die Probleme, die gelöst werden sollten, waren: 
+            </p>
+            <ul>
+              <li>Es gibt in Münster sehr viele Webseiten für Termine</li>
+              <li>Nirgendwo findet man eine zentrale Übersicht</li>
+              <li>Die meisten Anbieter von Veranstaltungsdaten bietet keine offene Schnittstelle zum Abruf der Termine an</li>
+              <li>Bei den vergangenen MÜNSTERHACKs konnten schon mehrere Projekte nicht erfolgreich durchgeführt werden, da sie Münsteraner Veranstaltungsdaten benötigt hätten</li>
+            </ul>
+            <a name="loesung"></a>
+            <h2>Lösungsansatz</h2>
+            <p>
+              Im Team "Münster Info Hub" kam die Idee auf, eine <b>Suchmaschine für Veranstaltungen</b> zu bauen, 
+              die die einschlägigen Termin-Webseiten 
+              durchsucht, und die Daten aller gefundenen Termine indiziert. 
+              Diese Veranstaltungsdaten werden dann in eine Datenbank geschrieben und 
+              offen in einem einheitlichen Format maschinenlesbar und kostenfrei für alle Interessenten als "Open Data" zur Verfügung gestellt. 
+            </p>
+            <pre>
++----------+  +----------+
+|          |  |          |                                                                      +------------------+
+|    A*    |  |     B*   |  <------+                                                            |                  |
++----------+  +----------+         |                                                            | Anwendungsidee 1 |
+                                   |                                                            |                  |
+        +----------------+         +   +------------------+       +--------------------+        +------------------+
+ +----+ |                |             |                  |       |                    |
+ | D* | |       C*       |             |   MÜNSTER.JETZT  |       |  MÜNSTER.JETZT     |        +------------------+
+ |    | +----------------+ <---------+ |                  | <---+ |                    | <----+ |                  |
+ +----+                                |   Suchmaschine   |       |  Offene Datenbank  |        | Anwendungsidee 2 |
+        +---------------+           +  |                  |       |                    |        |                  |
+        |               |           |  +------------------+       +--------------------+        +------------------+
+        |     E*        | <---------+
+        |               |                                                                       +------------------+
+        +---------------+                                                                       |                  |
+                                                                                                |  .....           |
+ *Für Münster relevante                                                                         |                  |
+ Veranstaltungs-Webseiten                                                                       +------------------+
+    
+            </pre>
+
+            <a name="Dokumentation"></a>
+            <h2>API-Dokumentation</h2>
+            <p>
+              Die Rest-API kann angesprochen werden unter der folgenden Adresse: <br />
+              <a href="https://api.muenster.jetzt/msinfohub-events/_search">https://api.muenster.jetzt/msinfohub-events/_search</a>
+            </p>
+          
+            <p>
+              Es handelt sich um eine zur Elasticsearch REST-API kompatible API-Schnittstelle.
+            </p>
+
+            <a name="Datentypen"></a>
+            <h3>Datentypen</h3>
+            
+            <p>
+              Eine Beschreibung der zurückgelieferten Werte und der verwendeten Datentypen findet sich unter: <br /> 
+              <a href="https://api.muenster.jetzt/msinfohub-events">https://api.muenster.jetzt/msinfohub-events</a>
+            </p>
+Eine Response hat ungefähr das folgende Format: 
+<pre><code>
+    {
+      "title", 
+      "subtitle", // (optional) 
+      "start_date": "2008-03-01T13:00:00Z", 
+      "end_date": "2008-03-01T15:00:00Z",  // (optional)
+      "description", // (optional)
+      "link", 
+      "category", // (optional)
+      "location_name", 
+      "location_address",  // (optional)
+      "source", // origin of these data
+      "tags": [ // (optional)
+          "bla", ...
+      ],
+      "geo": {
+          "lat": "51.956944",
+          "lon": "7.005556"
+          },
+      "images":[
+          {
+          "image_url",  // (optional)
+          "image_text", // (optional)
+          "image_copyright"    // (optional)
+          }
+      ],  // (optional)
+    }
+</code>
+</pre>
+
+            <a name="Abfragen"></a>
+            <h3>Abfragen</h3>
+            Im Folgenden werden ein paar gängige Beispiel-Abfragen gezeigt: 
+            <br /><br />
+            <ul>
+              <li>
+                Termine mit Suchbegriff finden: 
+                <br /> <a href="https://api.muenster.jetzt/msinfohub-events/_search?q=konzert">https://api.muenster.jetzt/msinfohub-events/_search?q=konzert</a>
+              </li>
+              <li>
+                In einem bestimmten Feld nach einem Wert suchen: 
+                <br /><a href="https://api.muenster.jetzt/msinfohub-events/_search?q=source:muenster.de">https://api.muenster.jetzt/msinfohub-events/_search?q=source:muenster.de</a>
+              </li>
+              <li>
+                Sortieren der Ergebnisse, z.B. nach dem Startdatum: <br /> 
+                <a href="https://api.muenster.jetzt/msinfohub-events/_search?sort=start_date">https://api.muenster.jetzt/msinfohub-events/_search?sort=start_date</a>
+              </li>
+              <li>
+                Anzhal der Suchergebnisse einschränken: <br />
+                <a href="https://api.muenster.jetzt/msinfohub-events/_search?size=10">https://api.muenster.jetzt/msinfohub-events/_search?size=10</a>
+              </li>
+            </ul>
+
+            <a name="Abfragen2"></a>
+            <h3>Komplexere Abfragen</h3>
+         Beispiel-Query:
+        <br />
+        <code>https://api.muenster.jetzt/infohub/_search?_source=source,geo,start_date&size=200&q=start_date:%3Enow</code>
+        <br /><br >
+        Erklärung der Beispiel-Query:
+        <p>
+          <ul><li>
+            Parameter "q" fragt in diesem Fall nur Events ab, die start_date in der Zukunft haben
+          </li><li>
+            Wegen "_source"-Parameter werden nur die Felder source, geo, start_date zurückgegeben
+          </li></li>
+            Durch "size" werden maximal 200 results returnt
+          </li></ul>
+          </p>
+          
+          <a name="more"></a>
+          <h3>Weiterführende Links</h3>
+          
+          <ul>
+            <li>Wie die Abfragesprache im Parameter “q” funktioniert: <br />
+            <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html</a>
+          </li>
+          <li>
+            Hier steht wie man nur einzelne Felder zurückbekommt: <br />
+            <a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.3/docs-get.html#docs-get">https://www.elastic.co/guide/en/elasticsearch/reference/7.3/docs-get.html#docs-get</a>
+          </li>
+          <li>
+            Weitere Informationen in unserem Github-Repository: <br />
+            <a href="https://github.com/codeformuenster/muenster-info-hub">https://github.com/codeformuenster/muenster-info-hub</a>
+          </li>
+     
+          </ul>
+        </div>
+      </div>
+    </div>
+</body>
+
+</html>
