@@ -2,3 +2,4 @@ Scrapy==1.7.3
 certifi
 elasticsearch==7.0.4
 pytz
+geopy

@@ -2,6 +2,7 @@ import scrapy
 import os
 from party_scraper import items
 from datetime import datetime, timedelta
+from geopy.geocoders import Nominatim
 
 
 MONTH = {
@@ -28,6 +29,7 @@ def clean_date(str, inf='%Y-%m-%d', outf='%Y-%m-%d'):
 class PartyPhaseSpider(scrapy.Spider):
     name = "partyphase"
     allowed_domains = ["muenster.partyphase.net"]
+    geolocator = Nominatim(user_agent='muenster-info-hub')
 
     def start_requests(self):
         if ('SCRAPE_START' in os.environ and 'SCRAPE_END' in os.environ):
@@ -99,4 +101,6 @@ class PartyPhaseSpider(scrapy.Spider):
         add = u' '.join(map(str.strip, response.xpath('//div[@class="entry-content"]/text()').getall())).strip()
         event = response.meta['event']
         event['location_address'] = add
+        loc = self.geolocator.geocode(add)
+        event['geo'] = dict(lat=loc.latitude, lon=loc.longitude)
         return event
