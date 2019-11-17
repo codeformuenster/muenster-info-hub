@@ -1,5 +1,5 @@
 Scrapy==1.7.3
 certifi
 elasticsearch==7.0.4
-pytz
-geopy
+pytz==2019.2
+geopy==1.20.0
