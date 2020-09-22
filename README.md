@@ -1,4 +1,4 @@
-# Superseeded by [muenster-jetzt](https://github.com/codeformuenster/muenster-jetzt)
+# Superseded by [muenster-jetzt](https://github.com/codeformuenster/muenster-jetzt)
 
 # muenster-info-hub
 
